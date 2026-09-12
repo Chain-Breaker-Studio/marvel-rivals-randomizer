@@ -1055,13 +1055,20 @@
         38px 24px;
     }
 
+    /*
+      IMPORTANTE:
+      minmax(0, 1fr) permite que las tarjetas
+      se adapten correctamente cuando hay
+      2 o 3 héroes.
+    */
+
     .result-grid {
       display: grid;
 
       grid-template-columns:
         repeat(
           auto-fit,
-          minmax(210px, 1fr)
+          minmax(0, 1fr)
         );
 
       gap: 18px;
@@ -1080,6 +1087,8 @@
 
     .result-card {
       position: relative;
+
+      min-width: 0;
 
       min-height: 250px;
 
@@ -1182,13 +1191,31 @@
       letter-spacing: 3px;
     }
 
+
+    /*
+      =========================================================
+      CORRECCIÓN PRINCIPAL DE LOS NOMBRES
+      =========================================================
+
+      width: 100% evita que el texto intente ocupar
+      más espacio del que tiene la tarjeta.
+
+      overflow-wrap: break-word evita que una palabra
+      larga salga de la tarjeta.
+
+      min-width: 0 permite que el elemento flex/grid
+      realmente pueda encogerse.
+    */
+
     .character-name {
       position: relative;
       z-index: 2;
 
       margin-top: 15px;
 
+      width: 100%;
       max-width: 100%;
+      min-width: 0;
 
       font-size:
         clamp(28px, 5vw, 52px);
@@ -1204,7 +1231,32 @@
 
       text-shadow:
         3px 3px 0 rgba(226,27,35,.15);
+
+      overflow-wrap: break-word;
+      word-break: normal;
     }
+
+
+    /*
+      Cuando hay 2 tarjetas reducimos ligeramente
+      el tamaño para dar más espacio al nombre.
+    */
+
+    .result-grid:has(.result-card:nth-child(2)) .character-name {
+      font-size:
+        clamp(24px, 4vw, 44px);
+    }
+
+
+    /*
+      Cuando hay 3 tarjetas reducimos un poco más.
+    */
+
+    .result-grid:has(.result-card:nth-child(3)) .character-name {
+      font-size:
+        clamp(22px, 3.5vw, 38px);
+    }
+
 
     .character-role {
       position: relative;
@@ -1214,6 +1266,8 @@
 
       padding:
         6px 11px;
+
+      max-width: 100%;
 
       color: #b9b9bf;
 
@@ -1327,6 +1381,8 @@
       }
 
       100% {
+        opacity: 1;
+
         transform:
           scale(1)
           translateY(0);
@@ -1719,9 +1775,22 @@
       max-width: 1250px;
 
       gap: clamp(14px, 1.5vw, 24px);
+
+      /*
+        IMPORTANTE:
+        También permitimos que las tarjetas
+        de Broadcast se encojan correctamente.
+      */
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(0, 1fr)
+        );
     }
 
     body.broadcast-mode .result-card {
+      min-width: 0;
+
       min-height:
         clamp(220px, 43vh, 500px);
 
@@ -1734,14 +1803,39 @@
     }
 
     body.broadcast-mode .character-name {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+
       font-size:
         clamp(34px, 5.5vw, 78px);
 
-      max-width: 95%;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    /*
+      Broadcast + 2 héroes
+    */
+
+    body.broadcast-mode .result-grid:has(.result-card:nth-child(2)) .character-name {
+      font-size:
+        clamp(30px, 4.5vw, 62px);
+    }
+
+    /*
+      Broadcast + 3 héroes
+    */
+
+    body.broadcast-mode .result-grid:has(.result-card:nth-child(3)) .character-name {
+      font-size:
+        clamp(27px, 3.8vw, 50px);
     }
 
     body.broadcast-mode .character-role {
       margin-top: 16px;
+
+      max-width: 100%;
 
       font-size: 8px;
     }
@@ -1885,6 +1979,25 @@
       .character-name {
         font-size:
           clamp(25px, 4vw, 43px);
+      }
+
+      /*
+        Ajuste adicional para 2 héroes en pantallas
+        de escritorio pequeñas.
+      */
+
+      .result-grid:has(.result-card:nth-child(2)) .character-name {
+        font-size:
+          clamp(22px, 3.5vw, 37px);
+      }
+
+      /*
+        Ajuste adicional para 3 héroes.
+      */
+
+      .result-grid:has(.result-card:nth-child(3)) .character-name {
+        font-size:
+          clamp(20px, 3vw, 32px);
       }
 
       .random-button {
@@ -2062,6 +2175,17 @@
           clamp(30px, 10vw, 48px);
       }
 
+      /*
+        En móvil las tarjetas son una debajo de otra,
+        así que devolvemos un tamaño cómodo.
+      */
+
+      .result-grid:has(.result-card:nth-child(2)) .character-name,
+      .result-grid:has(.result-card:nth-child(3)) .character-name {
+        font-size:
+          clamp(30px, 10vw, 48px);
+      }
+
       .hero-list {
         grid-template-columns:
           repeat(2, 1fr);
@@ -2121,6 +2245,12 @@
       }
 
       body.broadcast-mode .character-name {
+        font-size:
+          clamp(29px, 10vw, 48px);
+      }
+
+      body.broadcast-mode .result-grid:has(.result-card:nth-child(2)) .character-name,
+      body.broadcast-mode .result-grid:has(.result-card:nth-child(3)) .character-name {
         font-size:
           clamp(29px, 10vw, 48px);
       }
@@ -2751,14 +2881,14 @@
 
 
     [...characters]
-  .sort((a, b) =>
-    a.name.localeCompare(
-      b.name,
-      "es",
-      { sensitivity: "base" }
-    )
-  )
-  .forEach(character => {
+      .sort((a, b) =>
+        a.name.localeCompare(
+          b.name,
+          "es",
+          { sensitivity: "base" }
+        )
+      )
+      .forEach(character => {
 
         const option =
           document.createElement(
@@ -2921,22 +3051,22 @@
   function excludeAll() {
 
     [...characters]
-  .sort((a, b) =>
-    a.name.localeCompare(
-      b.name,
-      "es",
-      { sensitivity: "base" }
-    )
-  )
-  .forEach(
-    character => {
+      .sort((a, b) =>
+        a.name.localeCompare(
+          b.name,
+          "es",
+          { sensitivity: "base" }
+        )
+      )
+      .forEach(
+        character => {
 
-        excludedCharacters.add(
-          character.name
-        );
+          excludedCharacters.add(
+            character.name
+          );
 
-      }
-    );
+        }
+      );
 
     buildHeroList();
 
@@ -2977,66 +3107,61 @@
      COUNT
   ========================================================= */
 
- function setCount(count) {
+  function setCount(count) {
 
-  if (spinning) return;
+    if (spinning) return;
 
-  selectedCount = count;
-
-  document
-    .querySelectorAll(".count-button")
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        Number(button.dataset.count) === count
-      );
-
-    });
-
-  /*
-    Actualizar inmediatamente el display
-    para reflejar el número de héroes elegido.
-  */
-
-  const results =
-    document.getElementById("results");
-
-  const currentCards =
-    results.querySelectorAll(".result-card");
-
-  /*
-    Si todavía estamos en READY,
-    reconstruimos la pantalla con el número
-    de tarjetas seleccionado.
-  */
-
-  if (!spinning) {
-
-    const placeholders =
-      Array.from(
-        { length: selectedCount },
-        (_, index) => ({
-          name: "?",
-          role: "SELECT YOUR OPTIONS"
-        })
-      );
-
-    renderCharacters(
-      placeholders,
-      true
-    );
-
-    document.getElementById("status").textContent =
-      "READY";
+    selectedCount = count;
 
     document
-      .getElementById("display")
-      .classList.remove("winner");
+      .querySelectorAll(".count-button")
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          Number(button.dataset.count) === count
+        );
+
+      });
+
+
+    const results =
+      document.getElementById("results");
+
+
+    const currentCards =
+      results.querySelectorAll(".result-card");
+
+
+    if (!spinning) {
+
+      const placeholders =
+        Array.from(
+          { length: selectedCount },
+          (_, index) => ({
+            name: "?",
+            role: "SELECT YOUR OPTIONS"
+          })
+        );
+
+
+      renderCharacters(
+        placeholders,
+        true
+      );
+
+
+      document.getElementById("status").textContent =
+        "READY";
+
+
+      document
+        .getElementById("display")
+        .classList.remove("winner");
+
+    }
 
   }
-
-}
 
 
 
@@ -3418,6 +3543,7 @@
         "randomizing"
       );
 
+
       display.classList.add(
         "winner"
       );
@@ -3614,4 +3740,3 @@
 
 </body>
 </html>
-```
