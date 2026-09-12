@@ -2963,28 +2963,66 @@
      COUNT
   ========================================================= */
 
-  function setCount(count) {
+ function setCount(count) {
 
-    if (spinning) return;
+  if (spinning) return;
 
-    selectedCount =
-      count;
+  selectedCount = count;
 
+  document
+    .querySelectorAll(".count-button")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        Number(button.dataset.count) === count
+      );
+
+    });
+
+  /*
+    Actualizar inmediatamente el display
+    para reflejar el número de héroes elegido.
+  */
+
+  const results =
+    document.getElementById("results");
+
+  const currentCards =
+    results.querySelectorAll(".result-card");
+
+  /*
+    Si todavía estamos en READY,
+    reconstruimos la pantalla con el número
+    de tarjetas seleccionado.
+  */
+
+  if (!spinning) {
+
+    const placeholders =
+      Array.from(
+        { length: selectedCount },
+        (_, index) => ({
+          name: "?",
+          role: "SELECT YOUR OPTIONS"
+        })
+      );
+
+    renderCharacters(
+      placeholders,
+      true
+    );
+
+    document.getElementById("status").textContent =
+      "READY";
 
     document
-      .querySelectorAll(
-        ".count-button"
-      )
-      .forEach(button => {
-
-        button.classList.toggle(
-          "active",
-          Number(button.dataset.count) === count
-        );
-
-      });
+      .getElementById("display")
+      .classList.remove("winner");
 
   }
+
+}
 
 
 
