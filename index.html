@@ -17,7 +17,6 @@
       --line: #292e3b;
       --text: #f5f7ff;
       --muted: #7f8798;
-      --accent: #ffffff;
     }
 
     body {
@@ -34,6 +33,7 @@
         );
 
       color: var(--text);
+
       font-family:
         Arial,
         Helvetica,
@@ -42,22 +42,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-
-      background:
-        linear-gradient(
-          115deg,
-          transparent 0%,
-          rgba(255,255,255,0.025) 45%,
-          transparent 50%
-        );
-
-      pointer-events: none;
     }
 
     .app {
@@ -122,6 +106,10 @@
       box-shadow:
         0 30px 100px rgba(0,0,0,0.5),
         inset 0 0 80px rgba(255,255,255,0.025);
+
+      transition:
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
     }
 
     .display::before {
@@ -187,11 +175,21 @@
       filter: blur(0.4px);
     }
 
+    .winner {
+      border-color: rgba(255,255,255,0.28);
+
+      box-shadow:
+        0 0 70px rgba(255,255,255,0.08),
+        0 30px 100px rgba(0,0,0,0.6),
+        inset 0 0 100px rgba(255,255,255,0.035);
+    }
+
     .winner .character {
       animation: winner 0.7s ease forwards;
     }
 
     @keyframes winner {
+
       0% {
         transform: scale(0.8);
         opacity: 0;
@@ -207,6 +205,7 @@
       100% {
         transform: scale(1);
       }
+
     }
 
     button {
@@ -231,7 +230,8 @@
 
       transition:
         transform 0.15s ease,
-        box-shadow 0.15s ease;
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
     }
 
     button:hover {
@@ -273,9 +273,11 @@
       button {
         width: 100%;
       }
+
     }
   </style>
 </head>
+
 
 <body>
 
@@ -285,13 +287,22 @@
       SUPER PHOENIX SPORTS
     </div>
 
-    <h1>MARVEL RIVALS</h1>
+    <h1>
+      MARVEL RIVALS
+    </h1>
 
-    <div class="status" id="status">
+    <div
+      class="status"
+      id="status"
+    >
       RANDOMIZER
     </div>
 
-    <section class="display" id="display">
+
+    <section
+      class="display"
+      id="display"
+    >
 
       <div class="character">
 
@@ -313,6 +324,7 @@
 
     </section>
 
+
     <button
       id="randomButton"
       onclick="randomizeCharacter()"
@@ -320,65 +332,22 @@
       ⚡ RANDOMIZE
     </button>
 
+
     <div class="hint">
-      AUDIO GENERATED IN REAL TIME
+      SUPER PHOENIX SPORTS • MARVEL RIVALS RANDOMIZER
     </div>
 
   </main>
 
 
+  <!--
+    Los personajes están en un archivo separado.
+  -->
+
+  <script src="characters.js"></script>
+
+
   <script>
-
-    /*
-      ============================================
-      PERSONAJES
-      ============================================
-    */
-
-    const characters = [
-
-      {
-        name: "SPIDER-MAN",
-        role: "DUELIST"
-      },
-
-      {
-        name: "GROOT",
-        role: "VANGUARD"
-      },
-
-      {
-        name: "IRON MAN",
-        role: "DUELIST"
-      },
-
-      {
-        name: "MANTIS",
-        role: "STRATEGIST"
-      },
-
-      {
-        name: "MAGNETO",
-        role: "VANGUARD"
-      },
-
-      {
-        name: "BLACK PANTHER",
-        role: "DUELIST"
-      },
-
-      {
-        name: "PSYLOCKE",
-        role: "DUELIST"
-      },
-
-      {
-        name: "DOCTOR STRANGE",
-        role: "VANGUARD"
-      }
-
-    ];
-
 
     /*
       ============================================
@@ -412,7 +381,9 @@
 
       if (!audioContext) return;
 
-      const now = audioContext.currentTime;
+      const now =
+        audioContext.currentTime;
+
 
       const oscillator =
         audioContext.createOscillator();
@@ -420,30 +391,37 @@
       const gain =
         audioContext.createGain();
 
+
       oscillator.type = "triangle";
+
 
       oscillator.frequency.setValueAtTime(
         180 + intensity * 80,
         now
       );
 
+
       gain.gain.setValueAtTime(
         0.0001,
         now
       );
+
 
       gain.gain.exponentialRampToValueAtTime(
         0.08 * intensity,
         now + 0.005
       );
 
+
       gain.gain.exponentialRampToValueAtTime(
         0.0001,
         now + 0.055
       );
 
+
       oscillator.connect(gain);
       gain.connect(audioContext.destination);
+
 
       oscillator.start(now);
       oscillator.stop(now + 0.06);
@@ -455,11 +433,12 @@
 
       if (!audioContext) return;
 
-      const now = audioContext.currentTime;
+      const now =
+        audioContext.currentTime;
 
 
       /*
-        Impacto grave
+        IMPACTO GRAVE
       */
 
       const bass =
@@ -468,42 +447,50 @@
       const bassGain =
         audioContext.createGain();
 
+
       bass.type = "sine";
+
 
       bass.frequency.setValueAtTime(
         100,
         now
       );
 
+
       bass.frequency.exponentialRampToValueAtTime(
         42,
         now + 0.45
       );
+
 
       bassGain.gain.setValueAtTime(
         0.0001,
         now
       );
 
+
       bassGain.gain.exponentialRampToValueAtTime(
         0.4,
         now + 0.015
       );
+
 
       bassGain.gain.exponentialRampToValueAtTime(
         0.0001,
         now + 0.5
       );
 
+
       bass.connect(bassGain);
       bassGain.connect(audioContext.destination);
+
 
       bass.start(now);
       bass.stop(now + 0.55);
 
 
       /*
-        Tono brillante
+        TONO BRILLANTE
       */
 
       const shine =
@@ -512,35 +499,43 @@
       const shineGain =
         audioContext.createGain();
 
+
       shine.type = "triangle";
+
 
       shine.frequency.setValueAtTime(
         420,
         now
       );
 
+
       shine.frequency.exponentialRampToValueAtTime(
         900,
         now + 0.35
       );
+
 
       shineGain.gain.setValueAtTime(
         0.0001,
         now
       );
 
+
       shineGain.gain.exponentialRampToValueAtTime(
         0.12,
         now + 0.02
       );
+
 
       shineGain.gain.exponentialRampToValueAtTime(
         0.0001,
         now + 0.4
       );
 
+
       shine.connect(shineGain);
       shineGain.connect(audioContext.destination);
+
 
       shine.start(now);
       shine.stop(now + 0.45);
@@ -561,62 +556,92 @@
 
       if (spinning) return;
 
+
       initAudio();
+
 
       spinning = true;
 
+
       const button =
-        document.getElementById("randomButton");
+        document.getElementById(
+          "randomButton"
+        );
+
 
       const display =
-        document.getElementById("display");
+        document.getElementById(
+          "display"
+        );
+
 
       const name =
-        document.getElementById("characterName");
+        document.getElementById(
+          "characterName"
+        );
+
 
       const role =
-        document.getElementById("characterRole");
+        document.getElementById(
+          "characterRole"
+        );
+
 
       const status =
-        document.getElementById("status");
+        document.getElementById(
+          "status"
+        );
 
 
       button.disabled = true;
 
-      display.classList.remove("winner");
 
-      display.classList.add("randomizing");
+      display.classList.remove(
+        "winner"
+      );
 
-      status.textContent = "SELECTING";
+
+      display.classList.add(
+        "randomizing"
+      );
+
+
+      status.textContent =
+        "SELECTING";
 
 
       /*
-        Elegimos el resultado FINAL
-        antes de comenzar la animación.
+        RESULTADO FINAL
       */
 
       const finalIndex =
         Math.floor(
-          Math.random() * characters.length
+          Math.random() *
+          characters.length
         );
 
 
       /*
-        La animación dura aproximadamente
-        3 segundos.
+        DURACIÓN
       */
 
-      const duration = 3000;
+      const duration =
+        3000;
 
-      const start = performance.now();
 
-      let lastCharacter = -1;
+      const start =
+        performance.now();
+
+
+      let lastCharacter =
+        -1;
 
 
       function animate(now) {
 
         const elapsed =
           now - start;
+
 
         const progress =
           Math.min(
@@ -626,8 +651,7 @@
 
 
         /*
-          Ease-out:
-          empieza rápido y termina lentamente.
+          FRENADO SUAVE
         */
 
         const eased =
@@ -638,22 +662,18 @@
           );
 
 
-        /*
-          Calculamos qué personaje mostrar.
-        */
-
-        const steps =
-          28;
-
-        const step =
-          Math.floor(
-            eased * steps
-          );
-
-
         let index;
 
-        if (progress < 0.9) {
+
+        /*
+          Primera parte:
+          personajes aleatorios.
+
+          Parte final:
+          nos acercamos al ganador.
+        */
+
+        if (progress < 0.88) {
 
           index =
             Math.floor(
@@ -662,11 +682,6 @@
             );
 
         } else {
-
-          /*
-            En la parte final
-            nos acercamos al ganador.
-          */
 
           index =
             finalIndex;
@@ -679,27 +694,36 @@
           const character =
             characters[index];
 
+
           name.textContent =
             character.name;
+
 
           role.textContent =
             character.role;
 
-          lastCharacter = index;
+
+          lastCharacter =
+            index;
 
 
           const intensity =
             0.4 +
             progress * 0.6;
 
-          playTick(intensity);
+
+          playTick(
+            intensity
+          );
 
         }
 
 
         if (progress < 1) {
 
-          requestAnimationFrame(animate);
+          requestAnimationFrame(
+            animate
+          );
 
         } else {
 
@@ -710,7 +734,9 @@
       }
 
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(
+        animate
+      );
 
 
       function finishSelection() {
@@ -721,6 +747,7 @@
 
         name.textContent =
           character.name;
+
 
         role.textContent =
           character.role;
@@ -734,6 +761,7 @@
           "randomizing"
         );
 
+
         display.classList.add(
           "winner"
         );
@@ -742,9 +770,12 @@
         playFinalSound();
 
 
-        button.disabled = false;
+        button.disabled =
+          false;
 
-        spinning = false;
+
+        spinning =
+          false;
 
       }
 
