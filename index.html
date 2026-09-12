@@ -19,7 +19,7 @@
       --line: #29303d;
       --text: #f5f7ff;
       --muted: #7e8798;
-      --accent: #ffffff;
+      --danger: #ff4d5a;
     }
 
     body {
@@ -59,19 +59,15 @@
 
     h1 {
       margin: 0;
-
       font-size: clamp(35px, 9vw, 78px);
       line-height: .9;
-
       font-weight: 950;
       letter-spacing: 3px;
     }
 
     .subtitle {
       margin-top: 14px;
-
       color: var(--muted);
-
       font-size: 11px;
       font-weight: bold;
       letter-spacing: 4px;
@@ -84,7 +80,6 @@
 
     .controls {
       margin-top: 32px;
-
       padding: 18px;
 
       border: 1px solid var(--line);
@@ -105,7 +100,6 @@
       margin-bottom: 12px;
 
       color: var(--muted);
-
       font-size: 9px;
       font-weight: 900;
       letter-spacing: 3px;
@@ -120,7 +114,10 @@
     }
 
     .filter-button,
-    .count-button {
+    .count-button,
+    .exclude-button,
+    .close-button,
+    .clear-button {
       border: 1px solid var(--line);
 
       background: #090c12;
@@ -136,12 +133,14 @@
 
       cursor: pointer;
 
-      transition:
-        .18s ease;
+      transition: .18s ease;
     }
 
     .filter-button:hover,
-    .count-button:hover {
+    .count-button:hover,
+    .exclude-button:hover,
+    .close-button:hover,
+    .clear-button:hover {
       border-color: #626b7c;
       color: white;
     }
@@ -151,13 +150,186 @@
       background: #f3f4f6;
       color: #05060a;
       border-color: #f3f4f6;
+    }
 
-      box-shadow:
-        0 0 25px rgba(255,255,255,.08);
+    .exclude-button {
+      width: 100%;
+      margin-top: 20px;
+
+      color: #ff8790;
+      border-color: rgba(255,77,90,.25);
+    }
+
+    .exclude-button:hover {
+      color: white;
+      border-color: var(--danger);
     }
 
     .control-group + .control-group {
       margin-top: 20px;
+    }
+
+
+    /* =========================
+       EXCLUSION PANEL
+    ========================= */
+
+    .exclude-panel {
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 18px;
+
+      border: 1px solid var(--line);
+      border-radius: 18px;
+
+      background:
+        #080a0f;
+
+      text-align: left;
+    }
+
+    .exclude-panel.open {
+      display: block;
+    }
+
+    .exclude-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+
+      margin-bottom: 15px;
+    }
+
+    .exclude-title {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .exclude-count {
+      color: var(--danger);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .exclude-actions {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 15px;
+    }
+
+    .clear-button {
+      flex: 1;
+      font-size: 9px;
+      padding: 9px;
+    }
+
+    .hero-list {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(145px, 1fr)
+        );
+
+      gap: 7px;
+
+      max-height: 360px;
+      overflow-y: auto;
+
+      padding-right: 3px;
+    }
+
+    .hero-option {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+
+      min-height: 42px;
+
+      padding: 9px;
+
+      border: 1px solid #1d222d;
+      border-radius: 9px;
+
+      background: #0c0f15;
+
+      cursor: pointer;
+
+      transition: .15s ease;
+    }
+
+    .hero-option:hover {
+      border-color: #4a5262;
+    }
+
+    .hero-option.excluded {
+      opacity: .4;
+
+      border-color:
+        rgba(255,77,90,.4);
+
+      background:
+        rgba(255,77,90,.04);
+    }
+
+    .hero-option input {
+      display: none;
+    }
+
+    .hero-check {
+      width: 15px;
+      height: 15px;
+
+      margin-right: 8px;
+
+      border: 1px solid #4a5262;
+      border-radius: 4px;
+
+      flex-shrink: 0;
+    }
+
+    .hero-option.excluded .hero-check {
+      border-color: var(--danger);
+      background: var(--danger);
+
+      position: relative;
+    }
+
+    .hero-option.excluded .hero-check::after {
+      content: "×";
+
+      position: absolute;
+
+      left: 2px;
+      top: -2px;
+
+      color: white;
+
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .hero-name {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .hero-role {
+      margin-top: 3px;
+
+      color: #596171;
+
+      font-size: 7px;
+      font-weight: bold;
+      letter-spacing: .5px;
     }
 
 
@@ -193,8 +365,7 @@
         0 30px 100px rgba(0,0,0,.55),
         inset 0 0 100px rgba(255,255,255,.025);
 
-      transition:
-        .4s ease;
+      transition: .4s ease;
     }
 
     .display::before {
@@ -204,7 +375,6 @@
       inset: 18px;
 
       border: 1px solid rgba(255,255,255,.045);
-
       border-radius: 20px;
     }
 
@@ -236,7 +406,6 @@
       z-index: 3;
 
       width: 100%;
-
       padding: 35px 20px;
     }
 
@@ -259,7 +428,6 @@
       padding: 25px 15px;
 
       border: 1px solid rgba(255,255,255,.08);
-
       border-radius: 18px;
 
       background:
@@ -274,8 +442,7 @@
         scale(.85)
         translateY(15px);
 
-      transition:
-        .35s ease;
+      transition: .35s ease;
     }
 
     .result-card.show {
@@ -389,7 +556,7 @@
 
 
     /* =========================
-       BUTTON
+       RANDOM BUTTON
     ========================= */
 
     .random-button {
@@ -446,7 +613,6 @@
       cursor: default;
     }
 
-
     .hint {
       margin-top: 20px;
 
@@ -479,6 +645,11 @@
       .count-button {
         flex: 1;
         min-width: 90px;
+      }
+
+      .hero-list {
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
     }
@@ -589,6 +760,65 @@
 
     </div>
 
+
+    <button
+      class="exclude-button"
+      onclick="toggleExcludePanel()"
+    >
+      🚫 EXCLUIR PERSONAJES
+    </button>
+
+
+    <!-- EXCLUSIONES -->
+
+    <div
+      class="exclude-panel"
+      id="excludePanel"
+    >
+
+      <div class="exclude-header">
+
+        <div class="exclude-title">
+          EXCLUDED HEROES
+        </div>
+
+        <div
+          class="exclude-count"
+          id="excludeCount"
+        >
+          0 EXCLUDED
+        </div>
+
+      </div>
+
+
+      <div class="exclude-actions">
+
+        <button
+          class="clear-button"
+          onclick="clearExcluded()"
+        >
+          ✓ LIMPIAR TODO
+        </button>
+
+        <button
+          class="clear-button"
+          onclick="excludeAll()"
+        >
+          × EXCLUIR TODOS
+        </button>
+
+      </div>
+
+
+      <div
+        class="hero-list"
+        id="heroList"
+      >
+      </div>
+
+    </div>
+
   </section>
 
 
@@ -600,7 +830,7 @@
   </div>
 
 
-  <!-- RESULTADO -->
+  <!-- DISPLAY -->
 
   <section
     class="display"
@@ -665,6 +895,9 @@
   let spinning = false;
 
   let audioContext = null;
+
+  let excludedCharacters =
+    new Set();
 
 
   /* =========================
@@ -854,7 +1087,198 @@
 
 
   /* =========================
-     FILTER ROLE
+     EXCLUSION PANEL
+  ========================= */
+
+  function buildHeroList() {
+
+    const list =
+      document.getElementById(
+        "heroList"
+      );
+
+    list.innerHTML = "";
+
+
+    characters.forEach(
+      character => {
+
+        const option =
+          document.createElement(
+            "div"
+          );
+
+        option.className =
+          "hero-option";
+
+
+        if (
+          excludedCharacters.has(
+            character.name
+          )
+        ) {
+
+          option.classList.add(
+            "excluded"
+          );
+
+        }
+
+
+        option.innerHTML = `
+
+          <div class="hero-check"></div>
+
+          <div>
+
+            <div class="hero-name">
+              ${character.name}
+            </div>
+
+            <div class="hero-role">
+              ${character.role}
+            </div>
+
+          </div>
+
+        `;
+
+
+        option.onclick =
+          () => {
+
+            toggleExcluded(
+              character.name,
+              option
+            );
+
+          };
+
+
+        list.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    updateExcludeCount();
+
+  }
+
+
+  function toggleExcludePanel() {
+
+    const panel =
+      document.getElementById(
+        "excludePanel"
+      );
+
+    panel.classList.toggle(
+      "open"
+    );
+
+
+    if (
+      panel.classList.contains(
+        "open"
+      )
+    ) {
+
+      buildHeroList();
+
+    }
+
+  }
+
+
+  function toggleExcluded(
+    name,
+    element
+  ) {
+
+    if (
+      excludedCharacters.has(name)
+    ) {
+
+      excludedCharacters.delete(
+        name
+      );
+
+      element.classList.remove(
+        "excluded"
+      );
+
+    } else {
+
+      excludedCharacters.add(
+        name
+      );
+
+      element.classList.add(
+        "excluded"
+      );
+
+    }
+
+
+    updateExcludeCount();
+
+  }
+
+
+  function updateExcludeCount() {
+
+    const counter =
+      document.getElementById(
+        "excludeCount"
+      );
+
+
+    const amount =
+      excludedCharacters.size;
+
+
+    counter.textContent =
+      amount +
+      (
+        amount === 1
+          ? " EXCLUDED"
+          : " EXCLUDED"
+      );
+
+  }
+
+
+  function clearExcluded() {
+
+    excludedCharacters.clear();
+
+    buildHeroList();
+
+  }
+
+
+  function excludeAll() {
+
+    characters.forEach(
+      character => {
+
+        excludedCharacters.add(
+          character.name
+        );
+
+      }
+    );
+
+    buildHeroList();
+
+  }
+
+
+  /* =========================
+     ROLE
   ========================= */
 
   function setRole(role) {
@@ -882,7 +1306,7 @@
 
 
   /* =========================
-     SELECT COUNT
+     COUNT
   ========================= */
 
   function setCount(count) {
@@ -910,24 +1334,33 @@
 
 
   /* =========================
-     GET AVAILABLE CHARACTERS
+     AVAILABLE CHARACTERS
   ========================= */
 
   function getAvailableCharacters() {
 
-    if (
-      selectedRole === "ALL"
-    ) {
-
-      return [
-        ...characters
-      ];
-
-    }
-
-
     return characters.filter(
       character => {
+
+        if (
+          excludedCharacters.has(
+            character.name
+          )
+        ) {
+
+          return false;
+
+        }
+
+
+        if (
+          selectedRole === "ALL"
+        ) {
+
+          return true;
+
+        }
+
 
         return character.role
           .split("/")
@@ -946,7 +1379,7 @@
 
 
   /* =========================
-     RANDOM UNIQUE
+     UNIQUE RANDOM
   ========================= */
 
   function getRandomCharacters(
@@ -971,9 +1404,11 @@
           available.length
         );
 
+
       selected.push(
         available[index]
       );
+
 
       available.splice(
         index,
@@ -1008,6 +1443,7 @@
         "div"
       );
 
+
     grid.className =
       "result-grid";
 
@@ -1019,6 +1455,7 @@
           document.createElement(
             "div"
           );
+
 
         card.className =
           "result-card";
@@ -1111,7 +1548,7 @@
     ) {
 
       alert(
-        "No hay suficientes personajes disponibles para esta selección."
+        "No hay suficientes personajes disponibles."
       );
 
       return;
@@ -1178,17 +1615,13 @@
       const elapsed =
         now - start;
 
+
       const progress =
         Math.min(
           elapsed / duration,
           1
         );
 
-
-      /*
-       * Al principio cambia rápido.
-       * Al final reduce la velocidad.
-       */
 
       const speed =
         35 +
@@ -1283,6 +1716,13 @@
     );
 
   }
+
+
+  /* =========================
+     INITIALIZE
+  ========================= */
+
+  buildHeroList();
 
 </script>
 
