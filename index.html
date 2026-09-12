@@ -2914,8 +2914,16 @@
 
   function excludeAll() {
 
-    characters.forEach(
-      character => {
+    [...characters]
+  .sort((a, b) =>
+    a.name.localeCompare(
+      b.name,
+      "es",
+      { sensitivity: "base" }
+    )
+  )
+  .forEach(
+    character => {
 
         excludedCharacters.add(
           character.name
