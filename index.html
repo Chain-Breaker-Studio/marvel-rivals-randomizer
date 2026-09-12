@@ -1,1 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marvel Rivals Randomizer</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #08090d;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app {
+      width: min(900px, 92%);
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #888;
+      letter-spacing: 4px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 40px;
+      font-size: clamp(32px, 7vw, 70px);
+      letter-spacing: 3px;
+    }
+
+    .character {
+      min-height: 300px;
+      border: 1px solid #292d38;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at center, #242936 0%, #11131a 45%, #090a0e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 40px;
+      margin-bottom: 30px;
+    }
+
+    .character-name {
+      font-size: clamp(40px, 10vw, 90px);
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .role {
+      margin-top: 15px;
+      color: #aaa;
+      letter-spacing: 5px;
+      font-weight: bold;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 20px 45px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      background: white;
+      color: black;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <div class="subtitle">
+      SUPER PHOENIX SPORTS
+    </div>
+
+    <h1>MARVEL RIVALS</h1>
+
+    <section class="character">
+      <div class="character-name" id="characterName">
+        READY
+      </div>
+
+      <div class="role" id="characterRole">
+        RANDOMIZER
+      </div>
+    </section>
+
+    <button onclick="randomizeCharacter()">
+      ⚡ RANDOMIZE
+    </button>
+
+  </main>
+
+  <script>
+    const characters = [
+      { name: "SPIDER-MAN", role: "DUELIST" },
+      { name: "GROOT", role: "VANGUARD" },
+      { name: "IRON MAN", role: "DUELIST" },
+      { name: "MANTIS", role: "STRATEGIST" },
+      { name: "MAGNETO", role: "VANGUARD" }
+    ];
+
+    function randomizeCharacter() {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      const character = characters[randomIndex];
+
+      document.getElementById("characterName").textContent =
+        character.name;
+
+      document.getElementById("characterRole").textContent =
+        character.role;
+    }
+  </script>
+
+</body>
+  </html>
