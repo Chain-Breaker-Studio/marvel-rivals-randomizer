@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Marvel Rivals Randomizer</title>
 
   <style>
@@ -10,76 +11,268 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #05060a;
+      --panel: #10131b;
+      --line: #292e3b;
+      --text: #f5f7ff;
+      --muted: #7f8798;
+      --accent: #ffffff;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      background: #08090d;
-      color: white;
-      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 35%,
+          #202633 0%,
+          #0c0f16 38%,
+          #05060a 75%
+        );
+
+      color: var(--text);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          115deg,
+          transparent 0%,
+          rgba(255,255,255,0.025) 45%,
+          transparent 50%
+        );
+
+      pointer-events: none;
     }
 
     .app {
-      width: min(900px, 92%);
+      width: min(950px, 92%);
       text-align: center;
+      padding: 40px 0;
     }
 
-    .subtitle {
-      color: #888;
-      letter-spacing: 4px;
-      font-size: 12px;
+    .brand {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 5px;
       margin-bottom: 12px;
     }
 
     h1 {
-      margin: 0 0 40px;
-      font-size: clamp(32px, 7vw, 70px);
-      letter-spacing: 3px;
-    }
+      margin: 0;
 
-    .character {
-      min-height: 300px;
-      border: 1px solid #292d38;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at center, #242936 0%, #11131a 45%, #090a0e 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 40px;
-      margin-bottom: 30px;
-    }
+      font-size: clamp(34px, 8vw, 78px);
+      line-height: 0.95;
 
-    .character-name {
-      font-size: clamp(40px, 10vw, 90px);
+      letter-spacing: 4px;
       font-weight: 900;
-      letter-spacing: 3px;
     }
 
-    .role {
+    .status {
       margin-top: 15px;
-      color: #aaa;
-      letter-spacing: 5px;
+      height: 20px;
+
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 4px;
       font-weight: bold;
     }
 
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 20px 45px;
-      font-size: 18px;
+    .display {
+      position: relative;
+
+      margin: 40px auto 30px;
+
+      width: 100%;
+      min-height: 330px;
+
+      border: 1px solid var(--line);
+      border-radius: 28px;
+
+      background:
+        radial-gradient(
+          circle at 50% 40%,
+          #242b39 0%,
+          #11151e 42%,
+          #090b10 80%
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,0.5),
+        inset 0 0 80px rgba(255,255,255,0.025);
+    }
+
+    .display::before {
+      content: "";
+
+      position: absolute;
+      inset: 20px;
+
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 20px;
+
+      pointer-events: none;
+    }
+
+    .display::after {
+      content: "";
+
+      position: absolute;
+
+      width: 500px;
+      height: 500px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,0.07),
+          transparent 65%
+        );
+
+      pointer-events: none;
+    }
+
+    .character {
+      position: relative;
+      z-index: 2;
+
+      transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+    }
+
+    .character-name {
+      font-size: clamp(38px, 10vw, 95px);
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+
+      text-shadow:
+        0 0 30px rgba(255,255,255,0.12);
+    }
+
+    .character-role {
+      margin-top: 14px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 6px;
+    }
+
+    .randomizing .character {
+      transform: scale(1.025);
+      filter: blur(0.4px);
+    }
+
+    .winner .character {
+      animation: winner 0.7s ease forwards;
+    }
+
+    @keyframes winner {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+        filter: blur(12px);
+      }
+
+      55% {
+        transform: scale(1.12);
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+
+      padding: 21px 48px;
+
+      border-radius: 14px;
+
+      background: #f4f5f7;
+      color: #07080b;
+
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 3px;
+
       cursor: pointer;
-      background: white;
-      color: black;
+
+      box-shadow:
+        0 12px 35px rgba(0,0,0,0.35);
+
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 16px 45px rgba(0,0,0,0.45);
     }
 
     button:active {
       transform: scale(0.97);
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .hint {
+      margin-top: 22px;
+
+      color: #555c6c;
+
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 600px) {
+
+      .app {
+        padding: 25px 0;
+      }
+
+      .display {
+        min-height: 280px;
+        border-radius: 22px;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -88,48 +281,476 @@
 
   <main class="app">
 
-    <div class="subtitle">
+    <div class="brand">
       SUPER PHOENIX SPORTS
     </div>
 
     <h1>MARVEL RIVALS</h1>
 
-    <section class="character">
-      <div class="character-name" id="characterName">
-        READY
+    <div class="status" id="status">
+      RANDOMIZER
+    </div>
+
+    <section class="display" id="display">
+
+      <div class="character">
+
+        <div
+          class="character-name"
+          id="characterName"
+        >
+          READY
+        </div>
+
+        <div
+          class="character-role"
+          id="characterRole"
+        >
+          PRESS RANDOMIZE
+        </div>
+
       </div>
 
-      <div class="role" id="characterRole">
-        RANDOMIZER
-      </div>
     </section>
 
-    <button onclick="randomizeCharacter()">
+    <button
+      id="randomButton"
+      onclick="randomizeCharacter()"
+    >
       ⚡ RANDOMIZE
     </button>
 
+    <div class="hint">
+      AUDIO GENERATED IN REAL TIME
+    </div>
+
   </main>
 
+
   <script>
+
+    /*
+      ============================================
+      PERSONAJES
+      ============================================
+    */
+
     const characters = [
-      { name: "SPIDER-MAN", role: "DUELIST" },
-      { name: "GROOT", role: "VANGUARD" },
-      { name: "IRON MAN", role: "DUELIST" },
-      { name: "MANTIS", role: "STRATEGIST" },
-      { name: "MAGNETO", role: "VANGUARD" }
+
+      {
+        name: "SPIDER-MAN",
+        role: "DUELIST"
+      },
+
+      {
+        name: "GROOT",
+        role: "VANGUARD"
+      },
+
+      {
+        name: "IRON MAN",
+        role: "DUELIST"
+      },
+
+      {
+        name: "MANTIS",
+        role: "STRATEGIST"
+      },
+
+      {
+        name: "MAGNETO",
+        role: "VANGUARD"
+      },
+
+      {
+        name: "BLACK PANTHER",
+        role: "DUELIST"
+      },
+
+      {
+        name: "PSYLOCKE",
+        role: "DUELIST"
+      },
+
+      {
+        name: "DOCTOR STRANGE",
+        role: "VANGUARD"
+      }
+
     ];
 
-    function randomizeCharacter() {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      const character = characters[randomIndex];
 
-      document.getElementById("characterName").textContent =
-        character.name;
+    /*
+      ============================================
+      AUDIO
+      ============================================
+    */
 
-      document.getElementById("characterRole").textContent =
-        character.role;
+    let audioContext = null;
+
+
+    function initAudio() {
+
+      if (!audioContext) {
+
+        audioContext =
+          new (
+            window.AudioContext ||
+            window.webkitAudioContext
+          )();
+
+      }
+
+      if (audioContext.state === "suspended") {
+        audioContext.resume();
+      }
+
     }
+
+
+    function playTick(intensity = 1) {
+
+      if (!audioContext) return;
+
+      const now = audioContext.currentTime;
+
+      const oscillator =
+        audioContext.createOscillator();
+
+      const gain =
+        audioContext.createGain();
+
+      oscillator.type = "triangle";
+
+      oscillator.frequency.setValueAtTime(
+        180 + intensity * 80,
+        now
+      );
+
+      gain.gain.setValueAtTime(
+        0.0001,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.08 * intensity,
+        now + 0.005
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.055
+      );
+
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+
+      oscillator.start(now);
+      oscillator.stop(now + 0.06);
+
+    }
+
+
+    function playFinalSound() {
+
+      if (!audioContext) return;
+
+      const now = audioContext.currentTime;
+
+
+      /*
+        Impacto grave
+      */
+
+      const bass =
+        audioContext.createOscillator();
+
+      const bassGain =
+        audioContext.createGain();
+
+      bass.type = "sine";
+
+      bass.frequency.setValueAtTime(
+        100,
+        now
+      );
+
+      bass.frequency.exponentialRampToValueAtTime(
+        42,
+        now + 0.45
+      );
+
+      bassGain.gain.setValueAtTime(
+        0.0001,
+        now
+      );
+
+      bassGain.gain.exponentialRampToValueAtTime(
+        0.4,
+        now + 0.015
+      );
+
+      bassGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.5
+      );
+
+      bass.connect(bassGain);
+      bassGain.connect(audioContext.destination);
+
+      bass.start(now);
+      bass.stop(now + 0.55);
+
+
+      /*
+        Tono brillante
+      */
+
+      const shine =
+        audioContext.createOscillator();
+
+      const shineGain =
+        audioContext.createGain();
+
+      shine.type = "triangle";
+
+      shine.frequency.setValueAtTime(
+        420,
+        now
+      );
+
+      shine.frequency.exponentialRampToValueAtTime(
+        900,
+        now + 0.35
+      );
+
+      shineGain.gain.setValueAtTime(
+        0.0001,
+        now
+      );
+
+      shineGain.gain.exponentialRampToValueAtTime(
+        0.12,
+        now + 0.02
+      );
+
+      shineGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.4
+      );
+
+      shine.connect(shineGain);
+      shineGain.connect(audioContext.destination);
+
+      shine.start(now);
+      shine.stop(now + 0.45);
+
+    }
+
+
+    /*
+      ============================================
+      RANDOMIZER
+      ============================================
+    */
+
+    let spinning = false;
+
+
+    function randomizeCharacter() {
+
+      if (spinning) return;
+
+      initAudio();
+
+      spinning = true;
+
+      const button =
+        document.getElementById("randomButton");
+
+      const display =
+        document.getElementById("display");
+
+      const name =
+        document.getElementById("characterName");
+
+      const role =
+        document.getElementById("characterRole");
+
+      const status =
+        document.getElementById("status");
+
+
+      button.disabled = true;
+
+      display.classList.remove("winner");
+
+      display.classList.add("randomizing");
+
+      status.textContent = "SELECTING";
+
+
+      /*
+        Elegimos el resultado FINAL
+        antes de comenzar la animación.
+      */
+
+      const finalIndex =
+        Math.floor(
+          Math.random() * characters.length
+        );
+
+
+      /*
+        La animación dura aproximadamente
+        3 segundos.
+      */
+
+      const duration = 3000;
+
+      const start = performance.now();
+
+      let lastCharacter = -1;
+
+
+      function animate(now) {
+
+        const elapsed =
+          now - start;
+
+        const progress =
+          Math.min(
+            elapsed / duration,
+            1
+          );
+
+
+        /*
+          Ease-out:
+          empieza rápido y termina lentamente.
+        */
+
+        const eased =
+          1 -
+          Math.pow(
+            1 - progress,
+            4
+          );
+
+
+        /*
+          Calculamos qué personaje mostrar.
+        */
+
+        const steps =
+          28;
+
+        const step =
+          Math.floor(
+            eased * steps
+          );
+
+
+        let index;
+
+        if (progress < 0.9) {
+
+          index =
+            Math.floor(
+              Math.random() *
+              characters.length
+            );
+
+        } else {
+
+          /*
+            En la parte final
+            nos acercamos al ganador.
+          */
+
+          index =
+            finalIndex;
+
+        }
+
+
+        if (index !== lastCharacter) {
+
+          const character =
+            characters[index];
+
+          name.textContent =
+            character.name;
+
+          role.textContent =
+            character.role;
+
+          lastCharacter = index;
+
+
+          const intensity =
+            0.4 +
+            progress * 0.6;
+
+          playTick(intensity);
+
+        }
+
+
+        if (progress < 1) {
+
+          requestAnimationFrame(animate);
+
+        } else {
+
+          finishSelection();
+
+        }
+
+      }
+
+
+      requestAnimationFrame(animate);
+
+
+      function finishSelection() {
+
+        const character =
+          characters[finalIndex];
+
+
+        name.textContent =
+          character.name;
+
+        role.textContent =
+          character.role;
+
+
+        status.textContent =
+          "SELECTED";
+
+
+        display.classList.remove(
+          "randomizing"
+        );
+
+        display.classList.add(
+          "winner"
+        );
+
+
+        playFinalSound();
+
+
+        button.disabled = false;
+
+        spinning = false;
+
+      }
+
+    }
+
   </script>
 
 </body>
-  </html>
+</html>
