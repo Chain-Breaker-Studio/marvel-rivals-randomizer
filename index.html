@@ -1,1396 +1,2033 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Marvel Rivals Randomizer — Super Phoenix Sports</title>
+  <title>Marvel Rivals Randomizer — Super Phoenix Sports</title>
 
-<style>
-:root {
-    --bg: #080808;
-    --bg2: #111111;
+  <style>
 
-    --panel: #151515;
-    --panel2: #1d1d1d;
+    /* =========================================================
+       SPS × MARVEL RIVALS RANDOMIZER
+       Visual direction:
+       - Super Phoenix Sports
+       - Marvel Rivals
+       - Esports / Broadcast
+    ========================================================= */
 
-    --line: #343434;
+    * {
+      box-sizing: border-box;
+    }
 
-    --text: #ffffff;
-    --muted: #a6a6a6;
+    :root {
+      --black: #050505;
+      --black-2: #0a0a0c;
+      --panel: #101014;
+      --panel-2: #15151a;
 
-    --red: #e52323;
-    --red-dark: #9e1010;
+      --white: #ffffff;
+      --soft-white: #e8e8e8;
+      --muted: #9b9ba2;
 
-    --gold: #f5b72f;
-    --gold-light: #ffd86a;
+      --red: #e21b23;
+      --red-dark: #9d1016;
+      --orange: #ff5a1f;
+      --gold: #ffc72c;
+      --gold-soft: #ffe27a;
 
-    --green: #43e27d;
+      --line: rgba(255,255,255,.12);
+      --line-soft: rgba(255,255,255,.07);
 
-    --shadow: 0 18px 50px rgba(0,0,0,.45);
-}
+      --shadow: rgba(0,0,0,.65);
+    }
 
-* {
-    box-sizing: border-box;
-}
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-}
+    /* =========================================================
+       BASE
+    ========================================================= */
 
-body {
-    background:
-        radial-gradient(circle at 50% -10%, rgba(229,35,35,.16), transparent 34%),
-        radial-gradient(circle at 90% 90%, rgba(245,183,47,.06), transparent 30%),
-        linear-gradient(145deg, #050505, #101010 55%, #080808);
+    html {
+      background: var(--black);
+    }
 
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
 
-/* =========================================================
-   APP
-========================================================= */
+      color: var(--white);
 
-.app {
-    width: min(1180px, 94vw);
-    min-height: 100vh;
-    margin: 0 auto;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-    display: flex;
-    flex-direction: column;
-
-    padding: clamp(14px, 2vh, 24px) 0;
-}
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header {
-    position: relative;
-    text-align: center;
-    flex-shrink: 0;
-
-    margin-bottom: clamp(10px, 1.8vh, 20px);
-}
-
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-
-    color: #ffffff;
-    font-size: clamp(12px, 1vw, 15px);
-    font-weight: 900;
-    letter-spacing: .16em;
-
-    text-transform: uppercase;
-}
-
-.brand::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-
-    background: var(--red);
-
-    transform: rotate(45deg);
-
-    box-shadow:
-        0 0 0 3px rgba(229,35,35,.12),
-        0 0 16px rgba(229,35,35,.45);
-}
-
-.title {
-    margin: 5px 0 0;
-
-    font-size: clamp(34px, 4.3vw, 64px);
-    line-height: .9;
-
-    font-weight: 1000;
-    letter-spacing: -.045em;
-
-    text-transform: uppercase;
-
-    text-shadow:
-        0 3px 0 #000,
-        0 8px 30px rgba(0,0,0,.7);
-}
-
-.title span {
-    color: var(--red);
-}
-
-.subtitle {
-    margin-top: 7px;
-
-    color: var(--gold);
-    font-size: clamp(10px, .9vw, 13px);
-
-    font-weight: 900;
-    letter-spacing: .25em;
-
-    text-transform: uppercase;
-}
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-
-    margin-bottom: clamp(8px, 1.5vh, 16px);
-}
-
-.mode-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-
-    color: var(--muted);
-
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-}
-
-.mode-indicator::before {
-    content: "";
-
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-    background: var(--green);
-
-    box-shadow: 0 0 10px rgba(67,226,125,.7);
-}
-
-.broadcast-toggle {
-    border: 1px solid #444;
-    background: #151515;
-
-    color: #fff;
-
-    padding: 7px 12px;
-
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .12em;
-
-    cursor: pointer;
-
-    text-transform: uppercase;
-
-    transition: .18s ease;
-}
-
-.broadcast-toggle:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-.broadcast-toggle.active {
-    background: var(--red);
-    border-color: var(--red);
-
-    color: white;
-
-    box-shadow: 0 0 18px rgba(229,35,35,.3);
-}
-
-/* =========================================================
-   CONTROLS
-========================================================= */
-
-.controls {
-    display: grid;
-    grid-template-columns: 1.4fr .8fr auto;
-    gap: 10px;
-
-    flex-shrink: 0;
-
-    margin-bottom: clamp(9px, 1.5vh, 16px);
-}
-
-.control-group {
-    background: rgba(21,21,21,.94);
-
-    border: 1px solid var(--line);
-
-    padding: 9px;
-
-    box-shadow: var(--shadow);
-}
-
-.control-label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #777;
-
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: .15em;
-
-    text-transform: uppercase;
-}
-
-.button-row {
-    display: flex;
-    gap: 5px;
-}
-
-.option-btn {
-    flex: 1;
-
-    min-height: 31px;
-
-    border: 1px solid #3a3a3a;
-    background: #101010;
-
-    color: #aaa;
-
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .05em;
-
-    cursor: pointer;
-
-    transition: .15s ease;
-}
-
-.option-btn:hover {
-    color: #fff;
-    border-color: #777;
-}
-
-.option-btn.active {
-    background: var(--red);
-    border-color: var(--red);
-
-    color: white;
-
-    box-shadow:
-        inset 0 -2px 0 rgba(0,0,0,.25),
-        0 0 12px rgba(229,35,35,.2);
-}
-
-.exclude-btn {
-    width: 100%;
-
-    min-height: 31px;
-
-    border: 1px solid #3a3a3a;
-    background: #101010;
-
-    color: #aaa;
-
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .05em;
-
-    cursor: pointer;
-
-    transition: .15s ease;
-}
-
-.exclude-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-/* =========================================================
-   EXCLUSION PANEL
-========================================================= */
-
-.exclude-panel {
-    display: none;
-
-    background: #111;
-    border: 1px solid var(--line);
-
-    padding: 10px;
-
-    margin-bottom: 10px;
-
-    flex-shrink: 0;
-}
-
-.exclude-panel.open {
-    display: block;
-}
-
-.exclude-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 8px;
-}
-
-.exclude-title {
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .12em;
-
-    text-transform: uppercase;
-}
-
-.exclude-actions {
-    display: flex;
-    gap: 5px;
-}
-
-.small-btn {
-    border: 1px solid #3c3c3c;
-    background: #181818;
-
-    color: #aaa;
-
-    padding: 5px 8px;
-
-    font-size: 8px;
-    font-weight: 900;
-
-    cursor: pointer;
-}
-
-.small-btn:hover {
-    color: white;
-    border-color: var(--gold);
-}
-
-.hero-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-
-    gap: 4px;
-
-    max-height: 190px;
-    overflow-y: auto;
-}
-
-.hero-option {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    padding: 5px 7px;
-
-    background: #171717;
-    border: 1px solid #292929;
-
-    cursor: pointer;
-}
-
-.hero-option:hover {
-    border-color: #555;
-}
-
-.hero-option input {
-    accent-color: var(--red);
-}
-
-.hero-option-name {
-    font-size: 9px;
-    font-weight: 800;
-}
-
-.hero-option-role {
-    margin-left: auto;
-
-    color: #666;
-
-    font-size: 7px;
-    font-weight: 900;
-}
-
-/* =========================================================
-   RANDOMIZER STAGE
-========================================================= */
-
-.stage {
-    position: relative;
-
-    flex: 1;
-    min-height: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(229,35,35,.05),
-            transparent 25%,
-            transparent 75%,
-            rgba(245,183,47,.04)
-        ),
-        #0d0d0d;
-
-    border: 1px solid #303030;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.025);
-
-    overflow: hidden;
-}
-
-/* comic diagonal accents */
-
-.stage::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 180px;
-    height: 5px;
-
-    background: var(--red);
-
-    transform: skewX(-35deg);
-    transform-origin: left top;
-}
-
-.stage::after {
-    content: "";
-
-    position: absolute;
-
-    right: -60px;
-    bottom: 30px;
-
-    width: 210px;
-    height: 4px;
-
-    background: var(--gold);
-
-    transform: rotate(-35deg);
-    opacity: .7;
-}
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    padding: 8px 12px;
-
-    border-bottom: 1px solid #292929;
-
-    flex-shrink: 0;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: var(--green);
-
-    box-shadow: 0 0 10px rgba(67,226,125,.6);
-}
-
-.status {
-    color: #aaa;
-
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: .2em;
-
-    text-transform: uppercase;
-}
-
-/* =========================================================
-   RESULT DISPLAY
-========================================================= */
-
-.display {
-    flex: 1;
-    min-height: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: clamp(12px, 2vh, 24px);
-}
-
-.results {
-    width: 100%;
-    max-width: 920px;
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: clamp(9px, 1vw, 16px);
-}
-
-.result-card {
-    position: relative;
-
-    min-height: clamp(190px, 27vh, 310px);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    background:
+      background:
         radial-gradient(
-            circle at 50% 35%,
-            rgba(229,35,35,.09),
-            transparent 55%
+          circle at 50% -10%,
+          rgba(226,27,35,.18),
+          transparent 35%
         ),
-        #151515;
-
-    border: 1px solid #343434;
-
-    overflow: hidden;
-
-    opacity: 0;
-    transform: scale(.94);
-
-    transition:
-        opacity .18s ease,
-        transform .18s ease,
-        border-color .18s ease;
-}
-
-.result-card.show {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.result-card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 45px;
-    height: 3px;
-
-    background: var(--red);
-}
-
-.result-card::after {
-    content: "";
-
-    position: absolute;
-
-    right: 0;
-    bottom: 0;
-
-    width: 45px;
-    height: 3px;
-
-    background: var(--gold);
-}
-
-.result-number {
-    position: absolute;
-
-    top: 10px;
-    left: 12px;
-
-    color: #555;
-
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: .12em;
-}
-
-.result-placeholder {
-    color: #777;
-
-    font-size: clamp(40px, 5vw, 65px);
-    font-weight: 1000;
-
-    line-height: 1;
-}
-
-.result-name {
-    margin-top: 15px;
-
-    color: white;
-
-    font-size: clamp(18px, 2vw, 28px);
-    font-weight: 1000;
-    letter-spacing: -.025em;
-
-    text-transform: uppercase;
-}
-
-.result-role {
-    margin-top: 6px;
-
-    color: var(--gold);
-
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: .15em;
-
-    text-transform: uppercase;
-}
-
-/* =========================================================
-   ACTION
-========================================================= */
-
-.action-area {
-    display: flex;
-    justify-content: center;
-
-    padding:
-        0
-        clamp(12px, 2vh, 22px)
-        clamp(12px, 2vh, 20px);
-
-    flex-shrink: 0;
-}
-
-.randomize-btn {
-    position: relative;
-
-    min-width: clamp(240px, 28vw, 360px);
-    height: clamp(45px, 6vh, 58px);
-
-    border: none;
-
-    background:
+        radial-gradient(
+          circle at 90% 30%,
+          rgba(255,199,44,.08),
+          transparent 28%
+        ),
         linear-gradient(
-            180deg,
-            #f02b2b,
-            #bd1515
+          145deg,
+          #050505 0%,
+          #09090b 45%,
+          #050505 100%
         );
 
-    color: #fff;
+      overflow-x: hidden;
+    }
 
-    font-size: clamp(13px, 1.2vw, 17px);
-    font-weight: 1000;
-    letter-spacing: .12em;
 
-    text-transform: uppercase;
+    /* =========================================================
+       DECORATIVE BACKGROUND
+    ========================================================= */
 
-    cursor: pointer;
+    body::before {
+      content: "";
 
-    box-shadow:
-        0 7px 0 #720b0b,
-        0 12px 25px rgba(0,0,0,.4);
+      position: fixed;
+      inset: 0;
 
-    transition:
-        transform .12s ease,
-        filter .12s ease;
-}
+      pointer-events: none;
 
-.randomize-btn:hover {
-    filter: brightness(1.1);
-}
+      opacity: .5;
 
-.randomize-btn:active {
-    transform: translateY(5px);
+      background:
+        linear-gradient(
+          115deg,
+          transparent 0%,
+          transparent 45%,
+          rgba(255,255,255,.018) 45.2%,
+          transparent 45.5%
+        );
 
-    box-shadow:
-        0 2px 0 #720b0b,
-        0 6px 15px rgba(0,0,0,.4);
-}
+      background-size: 180px 180px;
 
-.randomize-btn:disabled {
-    cursor: not-allowed;
-    filter: grayscale(.4);
-    opacity: .8;
-}
+      z-index: 0;
+    }
 
-.hint {
-    text-align: center;
+    body::after {
+      content: "";
 
-    margin-top: 8px;
+      position: fixed;
 
-    color: #555;
+      width: 700px;
+      height: 700px;
 
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: .16em;
+      left: 50%;
+      top: -350px;
 
-    text-transform: uppercase;
-}
+      transform: translateX(-50%);
 
-/* =========================================================
-   CREATOR
-========================================================= */
+      pointer-events: none;
 
-.creator {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+      background:
+        radial-gradient(
+          circle,
+          rgba(226,27,35,.10),
+          transparent 68%
+        );
 
-    margin-top: clamp(9px, 1.5vh, 15px);
+      z-index: 0;
+    }
 
-    padding-top: 9px;
 
-    border-top: 1px solid #242424;
-
-    flex-shrink: 0;
-}
-
-.creator-main {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.creator-label {
-    color: #555;
-
-    font-size: 7px;
-    font-weight: 900;
-    letter-spacing: .15em;
-}
-
-.creator-name {
-    color: #fff;
-
-    font-size: 10px;
-    font-weight: 1000;
-    letter-spacing: .08em;
-
-    text-transform: uppercase;
-}
-
-.creator-role {
-    color: #777;
-
-    font-size: 8px;
-}
-
-.creator-links {
-    display: flex;
-    gap: 9px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-.creator-links a {
-    color: #777;
-
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: .04em;
-
-    text-decoration: none;
-}
-
-.creator-links a:hover {
-    color: var(--gold);
-}
-
-.build {
-    color: #444;
-
-    font-size: 7px;
-    font-weight: 900;
-}
-
-/* =========================================================
-   RANDOMIZING STATE
-========================================================= */
-
-.randomizing .result-card {
-    border-color: var(--red);
-}
-
-.randomizing .result-name {
-    color: var(--gold-light);
-}
-
-.winner .result-card {
-    border-color: var(--gold);
-
-    box-shadow:
-        0 0 0 1px rgba(245,183,47,.15),
-        0 0 35px rgba(245,183,47,.08);
-}
-
-/* =========================================================
-   BROADCAST MODE
-========================================================= */
-
-body.broadcast-mode {
-    overflow: hidden;
-}
-
-body.broadcast-mode .app {
-    width: 96vw;
-
-    padding-top: 1.2vh;
-    padding-bottom: 1.2vh;
-}
-
-body.broadcast-mode .header {
-    margin-bottom: 1vh;
-}
-
-body.broadcast-mode .brand {
-    font-size: 10px;
-}
-
-body.broadcast-mode .title {
-    font-size: clamp(32px, 4vw, 58px);
-}
-
-body.broadcast-mode .subtitle {
-    margin-top: 4px;
-    font-size: 9px;
-}
-
-body.broadcast-mode .controls,
-body.broadcast-mode .exclude-panel,
-body.broadcast-mode .creator,
-body.broadcast-mode .hint {
-    display: none;
-}
-
-body.broadcast-mode .top-bar {
-    margin-bottom: .8vh;
-}
-
-body.broadcast-mode .mode-indicator {
-    color: var(--gold);
-}
-
-body.broadcast-mode .stage {
-    min-height: 0;
-}
-
-body.broadcast-mode .display {
-    padding: 2vh 2vw;
-}
-
-body.broadcast-mode .results {
-    max-width: 1200px;
-    gap: 1.3vw;
-}
-
-body.broadcast-mode .result-card {
-    min-height: 48vh;
-}
-
-body.broadcast-mode .result-placeholder {
-    font-size: clamp(65px, 8vw, 120px);
-}
-
-body.broadcast-mode .result-name {
-    font-size: clamp(25px, 3vw, 48px);
-}
-
-body.broadcast-mode .result-role {
-    font-size: 10px;
-}
-
-body.broadcast-mode .action-area {
-    padding-bottom: 2vh;
-}
-
-/* =========================================================
-   COUNT-SPECIFIC RESULT LAYOUT
-========================================================= */
-
-.results.count-1 {
-    grid-template-columns: minmax(240px, 600px);
-    justify-content: center;
-}
-
-.results.count-2 {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-    max-width: 800px;
-}
-
-.results.count-3 {
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 850px) {
+    /* =========================================================
+       APP
+    ========================================================= */
 
     .app {
-        width: 94vw;
+      position: relative;
+      z-index: 1;
+
+      width: min(1120px, 94%);
+
+      margin: auto;
+
+      padding:
+        28px 0 60px;
     }
 
-    .controls {
-        grid-template-columns: 1fr;
+
+    /* =========================================================
+       TOP BRANDING
+    ========================================================= */
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+
+      margin-bottom: 15px;
     }
 
-    .results {
-        grid-template-columns: 1fr !important;
-        max-width: 500px;
+    .phoenix-mark {
+      width: 28px;
+      height: 28px;
+
+      position: relative;
+
+      transform: rotate(45deg);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold),
+          var(--orange) 48%,
+          var(--red)
+        );
+
+      box-shadow:
+        0 0 25px rgba(226,27,35,.25);
     }
 
-    .result-card {
-        min-height: 170px;
+    .phoenix-mark::after {
+      content: "";
+
+      position: absolute;
+      inset: 5px;
+
+      background: var(--black);
     }
 
-    .creator {
-        flex-direction: column;
-        align-items: flex-start;
+    .brand {
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 4px;
+
+      color: var(--white);
     }
 
-    .creator-links {
-        justify-content: flex-start;
+    .brand span {
+      color: var(--gold);
     }
 
-    body.broadcast-mode .result-card {
-        min-height: 52vh;
-    }
-}
 
-@media (max-height: 720px) and (min-width: 851px) {
+    /* =========================================================
+       HERO TITLE
+    ========================================================= */
 
-    .app {
-        padding-top: 9px;
-        padding-bottom: 9px;
-    }
+    .hero-header {
+      text-align: center;
 
-    .header {
-        margin-bottom: 7px;
+      position: relative;
+
+      padding:
+        8px 0 26px;
     }
 
-    .title {
-        font-size: 38px;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 13px;
+
+      color: var(--gold);
+
+      font-size: 9px;
+      font-weight: 950;
+      letter-spacing: 3px;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+
+      width: 28px;
+      height: 2px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--red)
+        );
+    }
+
+    .eyebrow::after {
+      background:
+        linear-gradient(
+          90deg,
+          var(--red),
+          transparent
+        );
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size:
+        clamp(42px, 9vw, 94px);
+
+      line-height: .82;
+
+      font-weight: 1000;
+
+      letter-spacing:
+        -2px;
+
+      text-transform: uppercase;
+
+      color: var(--white);
+
+      text-shadow:
+        4px 4px 0 rgba(226,27,35,.22);
+    }
+
+    .title-accent {
+      display: block;
+
+      margin-top: 11px;
+
+      color: var(--red);
+
+      font-size:
+        clamp(18px, 3vw, 28px);
+
+      line-height: 1;
+
+      font-weight: 1000;
+
+      letter-spacing: 7px;
     }
 
     .subtitle {
-        margin-top: 4px;
+      margin-top: 13px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 4px;
     }
+
+
+    /* =========================================================
+       SECTION LABEL
+    ========================================================= */
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      margin-bottom: 12px;
+
+      font-size: 9px;
+      font-weight: 950;
+      letter-spacing: 3px;
+
+      color: var(--muted);
+    }
+
+    .section-label::before {
+      content: "";
+
+      width: 4px;
+      height: 15px;
+
+      background:
+        linear-gradient(
+          180deg,
+          var(--gold),
+          var(--red)
+        );
+
+      transform: skewX(-18deg);
+    }
+
+
+    /* =========================================================
+       CONTROLS
+    ========================================================= */
 
     .controls {
-        margin-bottom: 7px;
+      position: relative;
+
+      padding: 20px;
+
+      border:
+        1px solid var(--line);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.055),
+          rgba(255,255,255,.018)
+        );
+
+      box-shadow:
+        0 25px 70px var(--shadow);
+
+      overflow: hidden;
     }
 
-    .control-group {
-        padding: 7px;
+    /*
+      Dynamic diagonal SPS-style accent.
+    */
+
+    .controls::before {
+      content: "";
+
+      position: absolute;
+
+      width: 220px;
+      height: 5px;
+
+      top: 0;
+      right: -30px;
+
+      transform: rotate(-6deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--red),
+          var(--gold)
+        );
     }
 
-    .control-label {
-        margin-bottom: 4px;
+    .controls::after {
+      content: "";
+
+      position: absolute;
+
+      width: 160px;
+      height: 160px;
+
+      right: -90px;
+      bottom: -90px;
+
+      border:
+        20px solid rgba(226,27,35,.045);
+
+      transform: rotate(45deg);
+
+      pointer-events: none;
     }
 
-    .stage {
-        min-height: 0;
+
+    .control-group + .control-group {
+      margin-top: 22px;
     }
+
+    .control-title {
+      margin-bottom: 10px;
+
+      color: #77777e;
+
+      font-size: 8px;
+      font-weight: 950;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    .role-buttons,
+    .count-buttons {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+    }
+
+    .filter-button,
+    .count-button,
+    .exclude-button,
+    .close-button,
+    .clear-button {
+
+      appearance: none;
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      background:
+        rgba(0,0,0,.42);
+
+      color: #a9a9af;
+
+      padding:
+        12px 16px;
+
+      border-radius: 2px;
+
+      font-size: 10px;
+      font-weight: 950;
+
+      letter-spacing: 1.2px;
+
+      cursor: pointer;
+
+      transition:
+        .18s ease;
+
+      text-transform: uppercase;
+    }
+
+    .filter-button:hover,
+    .count-button:hover,
+    .exclude-button:hover,
+    .close-button:hover,
+    .clear-button:hover {
+
+      color: var(--white);
+
+      border-color:
+        rgba(255,199,44,.55);
+
+      background:
+        rgba(255,255,255,.055);
+
+      transform:
+        translateY(-1px);
+    }
+
+    .filter-button.active,
+    .count-button.active {
+
+      color: var(--black);
+
+      border-color:
+        var(--gold);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-soft),
+          var(--gold)
+        );
+
+      box-shadow:
+        0 7px 22px rgba(255,199,44,.14);
+    }
+
+
+    .exclude-button {
+
+      width: 100%;
+
+      margin-top: 22px;
+
+      color: #ff8d91;
+
+      border-color:
+        rgba(226,27,35,.32);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(226,27,35,.07),
+          rgba(0,0,0,.3)
+        );
+    }
+
+    .exclude-button:hover {
+      color: var(--white);
+
+      border-color:
+        var(--red);
+    }
+
+
+    /* =========================================================
+       EXCLUSION PANEL
+    ========================================================= */
+
+    .exclude-panel {
+      display: none;
+
+      margin-top: 14px;
+
+      padding: 18px;
+
+      border:
+        1px solid rgba(255,255,255,.09);
+
+      background:
+        #080809;
+
+      text-align: left;
+    }
+
+    .exclude-panel.open {
+      display: block;
+
+      animation:
+        panelIn .25s ease;
+    }
+
+    @keyframes panelIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .exclude-header {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 10px;
+
+      margin-bottom: 15px;
+    }
+
+    .exclude-title {
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: 2px;
+    }
+
+    .exclude-count {
+      color: var(--red);
+
+      font-size: 8px;
+      font-weight: 950;
+      letter-spacing: 1px;
+    }
+
+    .exclude-actions {
+      display: flex;
+
+      gap: 7px;
+
+      margin-bottom: 14px;
+    }
+
+    .clear-button {
+      flex: 1;
+
+      padding: 9px;
+
+      font-size: 8px;
+    }
+
+
+    .hero-list {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(145px, 1fr)
+        );
+
+      gap: 6px;
+
+      max-height: 360px;
+
+      overflow-y: auto;
+
+      padding-right: 3px;
+    }
+
+    .hero-list::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .hero-list::-webkit-scrollbar-track {
+      background: #080808;
+    }
+
+    .hero-list::-webkit-scrollbar-thumb {
+      background: #3a3a40;
+    }
+
+
+    .hero-option {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+
+      min-height: 44px;
+
+      padding: 9px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      background:
+        #101014;
+
+      cursor: pointer;
+
+      transition:
+        .15s ease;
+    }
+
+    .hero-option:hover {
+      border-color:
+        rgba(255,199,44,.45);
+
+      background:
+        #16161b;
+    }
+
+    .hero-option.excluded {
+      opacity: .45;
+
+      border-color:
+        rgba(226,27,35,.45);
+
+      background:
+        rgba(226,27,35,.05);
+    }
+
+    .hero-option input {
+      display: none;
+    }
+
+    .hero-check {
+      position: relative;
+
+      width: 15px;
+      height: 15px;
+
+      margin-right: 8px;
+
+      flex-shrink: 0;
+
+      border:
+        1px solid #55555d;
+    }
+
+    .hero-option.excluded .hero-check {
+      border-color:
+        var(--red);
+
+      background:
+        var(--red);
+    }
+
+    .hero-option.excluded .hero-check::after {
+      content: "×";
+
+      position: absolute;
+
+      left: 2px;
+      top: -2px;
+
+      color: white;
+
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .hero-name {
+      font-size: 9px;
+      font-weight: 950;
+      letter-spacing: .5px;
+    }
+
+    .hero-role {
+      margin-top: 3px;
+
+      color: #64646b;
+
+      font-size: 7px;
+      font-weight: 900;
+
+      letter-spacing: .7px;
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    .status-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 9px;
+
+      margin-top: 24px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      background:
+        var(--gold);
+
+      transform: rotate(45deg);
+
+      box-shadow:
+        0 0 12px rgba(255,199,44,.45);
+
+      transition: .2s ease;
+    }
+
+    .status-wrap.selecting .status-dot {
+      background:
+        var(--red);
+
+      animation:
+        pulse .45s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        transform: rotate(45deg) scale(.8);
+      }
+
+      to {
+        transform: rotate(45deg) scale(1.35);
+      }
+    }
+
+    .status {
+      height: 15px;
+
+      color: #8a8a91;
+
+      font-size: 9px;
+      font-weight: 950;
+
+      letter-spacing: 4px;
+    }
+
+
+    /* =========================================================
+       MAIN DISPLAY
+    ========================================================= */
+
+    .display {
+      position: relative;
+
+      margin: 15px auto 24px;
+
+      min-height: 430px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(255,255,255,.13);
+
+      background:
+        linear-gradient(
+          135deg,
+          #111114 0%,
+          #09090b 48%,
+          #111114 100%
+        );
+
+      box-shadow:
+        0 35px 110px rgba(0,0,0,.72);
+
+      transition:
+        .35s ease;
+    }
+
+
+    /*
+      Comic / broadcast diagonal shape.
+    */
+
+    .display::before {
+      content: "";
+
+      position: absolute;
+
+      width: 75%;
+      height: 180%;
+
+      top: -40%;
+      left: -30%;
+
+      transform: rotate(24deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(226,27,35,.07),
+          transparent
+        );
+
+      pointer-events: none;
+    }
+
+    .display::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 12px;
+
+      border:
+        1px solid rgba(255,255,255,.045);
+
+      pointer-events: none;
+    }
+
+
+    /* Decorative corners */
+
+    .display-corner {
+      position: absolute;
+
+      width: 70px;
+      height: 70px;
+
+      pointer-events: none;
+
+      opacity: .8;
+    }
+
+    .display-corner::before,
+    .display-corner::after {
+      content: "";
+
+      position: absolute;
+
+      background:
+        var(--red);
+    }
+
+    .display-corner::before {
+      width: 50px;
+      height: 2px;
+    }
+
+    .display-corner::after {
+      width: 2px;
+      height: 50px;
+    }
+
+    .corner-tl {
+      top: 22px;
+      left: 22px;
+    }
+
+    .corner-tr {
+      top: 22px;
+      right: 22px;
+      transform: rotate(90deg);
+    }
+
+    .corner-bl {
+      bottom: 22px;
+      left: 22px;
+      transform: rotate(-90deg);
+    }
+
+    .corner-br {
+      bottom: 22px;
+      right: 22px;
+      transform: rotate(180deg);
+    }
+
+
+    /* =========================================================
+       RESULT AREA
+    ========================================================= */
+
+    .results {
+      position: relative;
+
+      z-index: 3;
+
+      width: 100%;
+
+      padding:
+        38px 24px;
+    }
+
+    .result-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(210px, 1fr)
+        );
+
+      gap: 18px;
+
+      width: 100%;
+      max-width: 930px;
+
+      margin: auto;
+    }
+
+
+    /* =========================================================
+       RESULT CARD
+    ========================================================= */
 
     .result-card {
-        min-height: 155px;
+      position: relative;
+
+      min-height: 250px;
+
+      padding:
+        25px 18px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.065),
+          rgba(255,255,255,.018)
+        );
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.38),
+        inset 0 0 60px rgba(255,255,255,.015);
+
+      opacity: 0;
+
+      transform:
+        scale(.84)
+        translateY(18px);
+
+      transition:
+        .35s ease;
     }
 
-    .result-name {
-        margin-top: 9px;
-        font-size: 19px;
+    /*
+      Red diagonal slash.
+    */
+
+    .result-card::before {
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+      height: 8px;
+
+      top: 18px;
+      right: -65px;
+
+      transform: rotate(-42deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--red)
+        );
+
+      opacity: .75;
     }
 
-    .action-area {
-        padding-bottom: 8px;
+    .result-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 120px;
+      height: 120px;
+
+      bottom: -75px;
+      left: -75px;
+
+      border:
+        15px solid rgba(255,199,44,.035);
+
+      transform:
+        rotate(45deg);
     }
 
-    .creator {
-        margin-top: 7px;
-        padding-top: 6px;
-    }
-}
+    .result-card.show {
+      opacity: 1;
 
-/* =========================================================
-   VERY WIDE BROADCAST
-========================================================= */
-
-@media (min-width: 1500px) {
-
-    body.broadcast-mode .result-card {
-        min-height: 55vh;
+      transform:
+        scale(1)
+        translateY(0);
     }
 
-    body.broadcast-mode .result-name {
-        font-size: clamp(32px, 3vw, 54px);
+
+    .result-number {
+      position: relative;
+      z-index: 2;
+
+      color: var(--gold);
+
+      font-size: 8px;
+
+      font-weight: 950;
+
+      letter-spacing: 3px;
     }
-}
-</style>
+
+    .character-name {
+      position: relative;
+      z-index: 2;
+
+      margin-top: 15px;
+
+      max-width: 100%;
+
+      font-size:
+        clamp(28px, 5vw, 52px);
+
+      line-height: .88;
+
+      font-weight: 1000;
+
+      letter-spacing:
+        -1px;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        3px 3px 0 rgba(226,27,35,.15);
+    }
+
+    .character-role {
+      position: relative;
+      z-index: 2;
+
+      margin-top: 15px;
+
+      padding:
+        6px 11px;
+
+      color: #b9b9bf;
+
+      border:
+        1px solid rgba(255,255,255,.10);
+
+      background:
+        rgba(0,0,0,.28);
+
+      font-size: 8px;
+
+      font-weight: 950;
+
+      letter-spacing: 2px;
+    }
+
+
+    /* =========================================================
+       READY STATE
+    ========================================================= */
+
+    .result-card.show:has(.character-name:first-of-type) {
+      /* intentionally subtle */
+    }
+
+
+    /* =========================================================
+       RANDOMIZING
+    ========================================================= */
+
+    .randomizing .result-card {
+      opacity: 1;
+
+      transform:
+        scale(1.015);
+
+      filter:
+        saturate(1.2);
+    }
+
+    .randomizing .character-name {
+      animation:
+        nameShuffle .12s infinite alternate;
+    }
+
+    @keyframes nameShuffle {
+      from {
+        transform:
+          translateX(-2px);
+      }
+
+      to {
+        transform:
+          translateX(2px);
+      }
+    }
+
+
+    /* =========================================================
+       WINNER
+    ========================================================= */
+
+    .winner {
+      border-color:
+        rgba(255,199,44,.42);
+
+      box-shadow:
+        0 0 0 1px rgba(226,27,35,.12),
+        0 0 80px rgba(226,27,35,.16),
+        0 35px 120px rgba(0,0,0,.75);
+    }
+
+    .winner .result-card {
+      border-color:
+        rgba(255,199,44,.3);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,199,44,.08),
+          rgba(226,27,35,.045),
+          rgba(255,255,255,.025)
+        );
+    }
+
+    .winner .result-card.show {
+      animation:
+        winner .7s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    @keyframes winner {
+
+      0% {
+        opacity: 0;
+
+        transform:
+          scale(.70)
+          translateY(20px);
+
+        filter:
+          blur(12px);
+      }
+
+      50% {
+        opacity: 1;
+
+        transform:
+          scale(1.07)
+          translateY(-3px);
+
+        filter:
+          blur(0);
+      }
+
+      75% {
+        transform:
+          scale(.98);
+      }
+
+      100% {
+        transform:
+          scale(1)
+          translateY(0);
+      }
+    }
+
+
+    /* =========================================================
+       RANDOM BUTTON
+    ========================================================= */
+
+    .random-button {
+      position: relative;
+
+      display: block;
+
+      width:
+        min(460px, 100%);
+
+      margin:
+        0 auto;
+
+      padding:
+        20px 24px;
+
+      appearance: none;
+
+      border: 0;
+
+      border-radius: 2px;
+
+      color: var(--white);
+
+      background:
+        linear-gradient(
+          115deg,
+          var(--red-dark) 0%,
+          var(--red) 50%,
+          var(--orange) 100%
+        );
+
+      font-size: 15px;
+
+      font-weight: 1000;
+
+      letter-spacing: 3px;
+
+      cursor: pointer;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 16px 45px rgba(0,0,0,.55),
+        0 0 35px rgba(226,27,35,.12);
+
+      transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        opacity .15s ease;
+    }
+
+    /*
+      Button highlight.
+    */
+
+    .random-button::before {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      left: -120%;
+
+      width: 70%;
+      height: 100%;
+
+      transform:
+        skewX(-25deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.25),
+          transparent
+        );
+
+      transition:
+        left .55s ease;
+    }
+
+    .random-button:hover::before {
+      left: 130%;
+    }
+
+    .random-button:hover {
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 21px 60px rgba(0,0,0,.62),
+        0 0 45px rgba(226,27,35,.22);
+    }
+
+    .random-button:active {
+      transform:
+        scale(.97);
+    }
+
+    .random-button:disabled {
+      opacity: .55;
+
+      cursor: default;
+
+      transform: none;
+    }
+
+
+    .hint {
+      margin-top: 15px;
+
+      color: #55555c;
+
+      text-align: center;
+
+      font-size: 8px;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+    }
+
+
+    /* =========================================================
+       AUTHOR / COMMUNITY
+    ========================================================= */
+
+    .creator-section {
+      position: relative;
+
+      margin-top: 55px;
+
+      padding-top: 26px;
+
+      border-top:
+        1px solid rgba(255,255,255,.08);
+
+      text-align: center;
+    }
+
+    .creator-kicker {
+      color: var(--gold);
+
+      font-size: 8px;
+
+      font-weight: 950;
+
+      letter-spacing: 3px;
+    }
+
+    .creator-name {
+      margin-top: 7px;
+
+      font-size: 20px;
+
+      font-weight: 1000;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+    }
+
+    .creator-role {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+    }
+
+    .creator-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-top: 16px;
+    }
+
+    .creator-link {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-width: 90px;
+
+      padding:
+        8px 12px;
+
+      color: #aaaab0;
+
+      border:
+        1px solid rgba(255,255,255,.09);
+
+      background:
+        rgba(255,255,255,.025);
+
+      text-decoration: none;
+
+      font-size: 8px;
+
+      font-weight: 950;
+
+      letter-spacing: 1px;
+
+      transition:
+        .18s ease;
+    }
+
+    .creator-link:hover {
+      color: var(--white);
+
+      border-color:
+        rgba(255,199,44,.45);
+
+      transform:
+        translateY(-1px);
+    }
+
+    .creator-link.support {
+      color: var(--gold);
+
+      border-color:
+        rgba(255,199,44,.22);
+    }
+
+    .creator-tag {
+      margin-top: 19px;
+
+      color: #55555c;
+
+      font-size: 7px;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+    }
+
+
+    /* =========================================================
+       ACCESSIBILITY
+    ========================================================= */
+
+    button:focus-visible,
+    a:focus-visible {
+      outline:
+        2px solid var(--gold);
+
+      outline-offset:
+        3px;
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
+    @media(prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media(max-width: 650px) {
+
+      .app {
+        width: 92%;
+
+        padding-top: 22px;
+      }
+
+      .brand {
+        font-size: 9px;
+
+        letter-spacing: 3px;
+      }
+
+      .phoenix-mark {
+        width: 22px;
+        height: 22px;
+      }
+
+      h1 {
+        font-size:
+          clamp(39px, 14vw, 65px);
+
+        letter-spacing:
+          -1px;
+      }
+
+      .title-accent {
+        font-size: 15px;
+
+        letter-spacing: 4px;
+      }
+
+      .subtitle {
+        font-size: 8px;
+
+        letter-spacing: 2.5px;
+      }
+
+      .controls {
+        padding: 15px;
+      }
+
+      .filter-button,
+      .count-button {
+        flex:
+          1 1 calc(50% - 5px);
+
+        min-width: 0;
+      }
+
+      .display {
+        min-height: 360px;
+      }
+
+      .display::after {
+        inset: 9px;
+      }
+
+      .display-corner {
+        transform:
+          scale(.75);
+      }
+
+      .corner-tr {
+        transform:
+          rotate(90deg)
+          scale(.75);
+      }
+
+      .corner-bl {
+        transform:
+          rotate(-90deg)
+          scale(.75);
+      }
+
+      .corner-br {
+        transform:
+          rotate(180deg)
+          scale(.75);
+      }
+
+      .results {
+        padding:
+          30px 14px;
+      }
+
+      .result-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+      .result-card {
+        min-height: 220px;
+      }
+
+      .character-name {
+        font-size:
+          clamp(30px, 10vw, 48px);
+      }
+
+      .hero-list {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .creator-links {
+        gap: 5px;
+      }
+
+      .creator-link {
+        min-width: 82px;
+      }
+    }
+
+
+    @media(max-width: 390px) {
+
+      .filter-button,
+      .count-button {
+        flex:
+          1 1 100%;
+      }
+
+      .hero-list {
+        grid-template-columns:
+          1fr;
+      }
+
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<div class="app">
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <header class="header">
-
-        <div class="brand">
-            SUPER PHOENIX SPORTS
-        </div>
-
-        <h1 class="title">
-            MARVEL <span>RIVALS</span>
-        </h1>
-
-        <div class="subtitle">
-            ESPORTS RANDOMIZER
-        </div>
-
-    </header>
+<main class="app">
 
 
-    <!-- =====================================================
-         TOP BAR
-    ====================================================== -->
+  <!-- =======================================================
+       SPS BRAND
+  ======================================================== -->
 
-    <div class="top-bar">
+  <header class="hero-header">
 
-        <div class="mode-indicator" id="modeIndicator">
-            STANDARD MODE
-        </div>
+    <div class="topline">
 
-        <button
-            class="broadcast-toggle"
-            id="broadcastToggle"
-            onclick="toggleBroadcastMode()"
-        >
-            BROADCAST MODE
-        </button>
+      <div class="phoenix-mark"></div>
+
+      <div class="brand">
+        SUPER <span>PHOENIX</span> SPORTS
+      </div>
 
     </div>
 
 
+    <div class="eyebrow">
+      COMMUNITY ESPORTS TOOL
+    </div>
+
+
+    <h1>
+      MARVEL RIVALS
+    </h1>
+
+    <div class="title-accent">
+      RANDOMIZER
+    </div>
+
+    <div class="subtitle">
+      SELECT YOUR HERO • PLAY YOUR MATCH
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       CONTROLS
+  ======================================================== -->
+
+  <section class="controls">
+
+    <div class="control-group">
+
+      <div class="section-label">
+        HERO ROLE
+      </div>
+
+      <div class="role-buttons">
+
+        <button
+          class="filter-button active"
+          data-role="ALL"
+          onclick="setRole('ALL')"
+        >
+          TODOS
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="VANGUARD"
+          onclick="setRole('VANGUARD')"
+        >
+          🛡 VANGUARD
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="DUELIST"
+          onclick="setRole('DUELIST')"
+        >
+          ⚔ DUELIST
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="STRATEGIST"
+          onclick="setRole('STRATEGIST')"
+        >
+          ◆ STRATEGIST
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="control-group">
+
+      <div class="section-label">
+        NUMBER OF HEROES
+      </div>
+
+      <div class="count-buttons">
+
+        <button
+          class="count-button active"
+          data-count="1"
+          onclick="setCount(1)"
+        >
+          1
+        </button>
+
+        <button
+          class="count-button"
+          data-count="2"
+          onclick="setCount(2)"
+        >
+          2
+        </button>
+
+        <button
+          class="count-button"
+          data-count="3"
+          onclick="setCount(3)"
+        >
+          3
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="exclude-button"
+      onclick="toggleExcludePanel()"
+    >
+      🚫 EXCLUIR PERSONAJES
+    </button>
+
+
     <!-- =====================================================
-         CONTROLS
+         EXCLUSIONS
     ====================================================== -->
 
-    <section class="controls">
-
-        <div class="control-group">
-
-            <span class="control-label">
-                ROLE
-            </span>
-
-            <div class="button-row">
-
-                <button
-                    class="option-btn active"
-                    data-role="ALL"
-                    onclick="setRole('ALL')"
-                >
-                    ALL
-                </button>
-
-                <button
-                    class="option-btn"
-                    data-role="VANGUARD"
-                    onclick="setRole('VANGUARD')"
-                >
-                    VANGUARD
-                </button>
-
-                <button
-                    class="option-btn"
-                    data-role="DUELIST"
-                    onclick="setRole('DUELIST')"
-                >
-                    DUELIST
-                </button>
-
-                <button
-                    class="option-btn"
-                    data-role="STRATEGIST"
-                    onclick="setRole('STRATEGIST')"
-                >
-                    STRATEGIST
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="control-group">
-
-            <span class="control-label">
-                CHARACTERS
-            </span>
-
-            <div class="button-row">
-
-                <button
-                    class="option-btn active"
-                    data-count="1"
-                    onclick="setCount(1)"
-                >
-                    1
-                </button>
-
-                <button
-                    class="option-btn"
-                    data-count="2"
-                    onclick="setCount(2)"
-                >
-                    2
-                </button>
-
-                <button
-                    class="option-btn"
-                    data-count="3"
-                    onclick="setCount(3)"
-                >
-                    3
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="control-group">
-
-            <span class="control-label">
-                FILTER
-            </span>
-
-            <button
-                class="exclude-btn"
-                onclick="toggleExcludePanel()"
-            >
-                🚫 EXCLUDE CHARACTERS
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         EXCLUSION PANEL
-    ====================================================== -->
-
-    <section
-        class="exclude-panel"
-        id="excludePanel"
+    <div
+      class="exclude-panel"
+      id="excludePanel"
     >
 
-        <div class="exclude-header">
+      <div class="exclude-header">
 
-            <div class="exclude-title">
-                Character Exclusions
-            </div>
-
-            <div class="exclude-actions">
-
-                <button
-                    class="small-btn"
-                    onclick="clearExcluded()"
-                >
-                    CLEAR
-                </button>
-
-                <button
-                    class="small-btn"
-                    onclick="excludeAll()"
-                >
-                    EXCLUDE ALL
-                </button>
-
-            </div>
-
+        <div class="exclude-title">
+          EXCLUDED HEROES
         </div>
 
         <div
-            class="hero-list"
-            id="heroList"
-        ></div>
+          class="exclude-count"
+          id="excludeCount"
+        >
+          0 EXCLUDED
+        </div>
 
-    </section>
+      </div>
 
 
-    <!-- =====================================================
-         RANDOMIZER STAGE
-    ====================================================== -->
+      <div class="exclude-actions">
 
-    <main class="stage" id="stage">
+        <button
+          class="clear-button"
+          onclick="clearExcluded()"
+        >
+          ✓ LIMPIAR TODO
+        </button>
 
-        <div class="status-bar">
+        <button
+          class="clear-button"
+          onclick="excludeAll()"
+        >
+          × EXCLUIR TODOS
+        </button>
 
-            <div class="status-dot"></div>
+      </div>
 
-            <div
-                class="status"
-                id="status"
-            >
-                READY
-            </div>
+
+      <div
+        class="hero-list"
+        id="heroList"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       STATUS
+  ======================================================== -->
+
+  <div
+    class="status-wrap"
+    id="statusWrap"
+  >
+
+    <div class="status-dot"></div>
+
+    <div
+      class="status"
+      id="status"
+    >
+      READY
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       DISPLAY
+  ======================================================== -->
+
+  <section
+    class="display"
+    id="display"
+  >
+
+    <div class="display-corner corner-tl"></div>
+    <div class="display-corner corner-tr"></div>
+    <div class="display-corner corner-bl"></div>
+    <div class="display-corner corner-br"></div>
+
+
+    <div
+      class="results"
+      id="results"
+    >
+
+      <div class="result-grid">
+
+        <div class="result-card show">
+
+          <div class="result-number">
+            READY
+          </div>
+
+          <div class="character-name">
+            ?
+          </div>
+
+          <div class="character-role">
+            SELECT YOUR OPTIONS
+          </div>
 
         </div>
 
+      </div>
 
-        <div class="display">
+    </div>
 
-            <div
-                class="results count-1"
-                id="results"
-            >
-
-                <div class="result-card show">
-
-                    <div class="result-number">
-                        SLOT 01
-                    </div>
-
-                    <div class="result-placeholder">
-                        ?
-                    </div>
-
-                    <div class="result-name">
-                        READY
-                    </div>
-
-                    <div class="result-role">
-                        SELECT YOUR OPTIONS
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+  </section>
 
 
-        <div class="action-area">
+  <!-- =======================================================
+       RANDOM BUTTON
+  ======================================================== -->
 
-            <div>
-
-                <button
-                    class="randomize-btn"
-                    id="randomizeBtn"
-                    onclick="randomizeCharacters()"
-                >
-                    ⚡ RANDOMIZE
-                </button>
-
-                <div class="hint">
-                    SUPER PHOENIX SPORTS • MARVEL RIVALS
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
+  <button
+    class="random-button"
+    id="randomButton"
+    onclick="randomizeCharacters()"
+  >
+    ⚡ RANDOMIZE
+  </button>
 
 
-    <!-- =====================================================
-         CREATOR
-    ====================================================== -->
-
-    <footer class="creator">
-
-        <div class="creator-main">
-
-            <div>
-
-                <div class="creator-label">
-                    CREATED BY
-                </div>
-
-                <div class="creator-name">
-                    DAENERYS84
-                </div>
-
-            </div>
-
-            <div class="creator-role">
-                Miembro Directivo // Quimera Guild
-            </div>
-
-        </div>
+  <div class="hint">
+    SUPER PHOENIX SPORTS • MARVEL RIVALS
+  </div>
 
 
-        <div class="creator-links">
+  <!-- =======================================================
+       CREATOR / COMMUNITY
+       HOLOSIM INSPIRED ONLY IN CONTENT STRUCTURE,
+       NOT IN VISUAL STYLE.
+  ======================================================== -->
 
-            <a
-                href="https://x.com/Daenerys_084"
-                target="_blank"
-                rel="noopener"
-            >
-                X
-            </a>
+  <footer class="creator-section">
 
-            <a
-                href="https://x.com/QuimeraSA_"
-                target="_blank"
-                rel="noopener"
-            >
-                QUIMERA
-            </a>
+    <div class="creator-kicker">
+      CREATED FOR THE COMMUNITY
+    </div>
 
-            <a
-                href="https://discord.gg/aVM5KjMeB6"
-                target="_blank"
-                rel="noopener"
-            >
-                DISCORD
-            </a>
+    <div class="creator-name">
+      DAENERYS84
+    </div>
 
-            <a
-                href="https://ko-fi.com/chainbreaker"
-                target="_blank"
-                rel="noopener"
-            >
-                SUPPORT
-            </a>
+    <div class="creator-role">
+      MIEMBRO DIRECTIVO // QUIMERA GUILD
+    </div>
 
-            <span class="build">
-                BUILD_v1.3.1
-            </span>
 
-        </div>
+    <div class="creator-links">
 
-    </footer>
+      <a
+        class="creator-link"
+        href="https://x.com/Daenerys_084"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        X / DAENERYS84
+      </a>
 
-</div>
+      <a
+        class="creator-link"
+        href="https://x.com/QuimeraSA_"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        X / QUIMERA
+      </a>
+
+      <a
+        class="creator-link"
+        href="https://discord.gg/aVM5KjMeB6"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        DISCORD
+      </a>
+
+      <a
+        class="creator-link support"
+        href="https://ko-fi.com/chainbreaker"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ☕ SUPPORT
+      </a>
+
+    </div>
+
+
+    <div class="creator-tag">
+      SPS × MARVEL RIVALS COMMUNITY TOOL • BUILD_v1.3.1
+    </div>
+
+  </footer>
+
+
+</main>
 
 
 <!-- =========================================================
-     CHARACTER DATA
-     DO NOT MODIFY characters.js
+     CHARACTER DATABASE
+     NO TOCAR: gestionado externamente
 ========================================================= -->
 
 <script src="characters.js"></script>
@@ -1398,762 +2035,852 @@ body.broadcast-mode .action-area {
 
 <script>
 
-/* =========================================================
-   STATE
-========================================================= */
+  let selectedRole = "ALL";
 
-let selectedRole = "ALL";
-let selectedCount = 1;
+  let selectedCount = 1;
 
-let spinning = false;
+  let spinning = false;
 
-let audioContext = null;
+  let audioContext = null;
 
-let excludedCharacters = new Set();
+  let excludedCharacters =
+    new Set();
 
 
-/* =========================================================
-   AUDIO
-========================================================= */
+  /* =========================================================
+     AUDIO
+  ========================================================= */
 
-function initAudio() {
+  function initAudio() {
 
     if (!audioContext) {
-        audioContext = new (
-            window.AudioContext ||
-            window.webkitAudioContext
+
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
         )();
+
     }
 
-    if (audioContext.state === "suspended") {
-        audioContext.resume();
+    if (
+      audioContext.state === "suspended"
+    ) {
+
+      audioContext.resume();
+
     }
-}
+
+  }
 
 
-function playTick(intensity = 0.5) {
+  function playTick(intensity = 1) {
 
     if (!audioContext) return;
 
+    const now =
+      audioContext.currentTime;
+
     const oscillator =
-        audioContext.createOscillator();
+      audioContext.createOscillator();
 
     const gain =
-        audioContext.createGain();
+      audioContext.createGain();
 
-    oscillator.type = "square";
+    oscillator.type =
+      "triangle";
 
-    oscillator.frequency.value =
-        140 + intensity * 160;
+    oscillator.frequency.setValueAtTime(
+      180 + intensity * 100,
+      now
+    );
 
     gain.gain.setValueAtTime(
-        0.035,
-        audioContext.currentTime
+      0.0001,
+      now
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.045
+      0.06 * intensity,
+      now + .005
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + .05
     );
 
     oscillator.connect(gain);
-    gain.connect(audioContext.destination);
 
-    oscillator.start();
+    gain.connect(
+      audioContext.destination
+    );
+
+    oscillator.start(now);
 
     oscillator.stop(
-        audioContext.currentTime + 0.05
+      now + .055
     );
-}
+
+  }
 
 
-function playFinalSound() {
+  function playFinalSound() {
 
     if (!audioContext) return;
 
-    const now = audioContext.currentTime;
+    const now =
+      audioContext.currentTime;
 
-    const frequencies = [
-        420,
-        560,
-        720
-    ];
 
-    frequencies.forEach((frequency, index) => {
+    const bass =
+      audioContext.createOscillator();
 
-        const oscillator =
-            audioContext.createOscillator();
+    const bassGain =
+      audioContext.createGain();
 
-        const gain =
-            audioContext.createGain();
+    bass.type =
+      "sine";
 
-        oscillator.type = "triangle";
+    bass.frequency.setValueAtTime(
+      110,
+      now
+    );
 
-        oscillator.frequency.value =
-            frequency;
+    bass.frequency.exponentialRampToValueAtTime(
+      45,
+      now + .5
+    );
 
-        gain.gain.setValueAtTime(
-            0.0001,
-            now + index * 0.08
+    bassGain.gain.setValueAtTime(
+      .0001,
+      now
+    );
+
+    bassGain.gain.exponentialRampToValueAtTime(
+      .35,
+      now + .02
+    );
+
+    bassGain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now + .55
+    );
+
+    bass.connect(bassGain);
+
+    bassGain.connect(
+      audioContext.destination
+    );
+
+    bass.start(now);
+
+    bass.stop(
+      now + .6
+    );
+
+
+    const shine =
+      audioContext.createOscillator();
+
+    const shineGain =
+      audioContext.createGain();
+
+    shine.type =
+      "triangle";
+
+    shine.frequency.setValueAtTime(
+      450,
+      now
+    );
+
+    shine.frequency.exponentialRampToValueAtTime(
+      950,
+      now + .35
+    );
+
+    shineGain.gain.setValueAtTime(
+      .0001,
+      now
+    );
+
+    shineGain.gain.exponentialRampToValueAtTime(
+      .12,
+      now + .02
+    );
+
+    shineGain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now + .4
+    );
+
+    shine.connect(shineGain);
+
+    shineGain.connect(
+      audioContext.destination
+    );
+
+    shine.start(now);
+
+    shine.stop(
+      now + .45
+    );
+
+  }
+
+
+  /* =========================================================
+     EXCLUSION PANEL
+  ========================================================= */
+
+  function buildHeroList() {
+
+    const list =
+      document.getElementById(
+        "heroList"
+      );
+
+    list.innerHTML = "";
+
+
+    characters.forEach(
+      character => {
+
+        const option =
+          document.createElement(
+            "div"
+          );
+
+        option.className =
+          "hero-option";
+
+
+        if (
+          excludedCharacters.has(
+            character.name
+          )
+        ) {
+
+          option.classList.add(
+            "excluded"
+          );
+
+        }
+
+
+        option.innerHTML = `
+
+          <div class="hero-check"></div>
+
+          <div>
+
+            <div class="hero-name">
+              ${character.name}
+            </div>
+
+            <div class="hero-role">
+              ${character.role}
+            </div>
+
+          </div>
+
+        `;
+
+
+        option.onclick =
+          () => {
+
+            toggleExcluded(
+              character.name,
+              option
+            );
+
+          };
+
+
+        list.appendChild(
+          option
         );
 
-        gain.gain.exponentialRampToValueAtTime(
-            0.14,
-            now + index * 0.08 + 0.02
-        );
+      }
+    );
 
-        gain.gain.exponentialRampToValueAtTime(
-            0.0001,
-            now + index * 0.08 + 0.35
-        );
-
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
-
-        oscillator.start(
-            now + index * 0.08
-        );
-
-        oscillator.stop(
-            now + index * 0.08 + 0.4
-        );
-
-    });
-}
-
-
-/* =========================================================
-   EXCLUSION SYSTEM
-========================================================= */
-
-function buildHeroList() {
-
-    const container =
-        document.getElementById("heroList");
-
-    if (!container || !Array.isArray(characters)) {
-        return;
-    }
-
-    container.innerHTML = "";
-
-    characters.forEach((character, index) => {
-
-        const label =
-            document.createElement("label");
-
-        label.className = "hero-option";
-
-        const checkbox =
-            document.createElement("input");
-
-        checkbox.type = "checkbox";
-
-        checkbox.checked =
-            excludedCharacters.has(character.name);
-
-        checkbox.addEventListener(
-            "change",
-            () => toggleExcluded(
-                character.name,
-                checkbox.checked
-            )
-        );
-
-        const name =
-            document.createElement("span");
-
-        name.className =
-            "hero-option-name";
-
-        name.textContent =
-            character.name;
-
-        const role =
-            document.createElement("span");
-
-        role.className =
-            "hero-option-role";
-
-        role.textContent =
-            character.role;
-
-        label.appendChild(checkbox);
-        label.appendChild(name);
-        label.appendChild(role);
-
-        container.appendChild(label);
-
-    });
 
     updateExcludeCount();
-}
+
+  }
 
 
-function toggleExcluded(name, excluded) {
+  function toggleExcludePanel() {
 
-    if (excluded) {
-        excludedCharacters.add(name);
+    const panel =
+      document.getElementById(
+        "excludePanel"
+      );
+
+    panel.classList.toggle(
+      "open"
+    );
+
+
+    if (
+      panel.classList.contains(
+        "open"
+      )
+    ) {
+
+      buildHeroList();
+
+    }
+
+  }
+
+
+  function toggleExcluded(
+    name,
+    element
+  ) {
+
+    if (
+      excludedCharacters.has(name)
+    ) {
+
+      excludedCharacters.delete(
+        name
+      );
+
+      element.classList.remove(
+        "excluded"
+      );
+
     } else {
-        excludedCharacters.delete(name);
+
+      excludedCharacters.add(
+        name
+      );
+
+      element.classList.add(
+        "excluded"
+      );
+
     }
 
+
     updateExcludeCount();
-}
+
+  }
 
 
-function updateExcludeCount() {
+  function updateExcludeCount() {
 
-    const button =
-        document.querySelector(".exclude-btn");
-
-    if (!button) return;
-
-    const count =
-        excludedCharacters.size;
-
-    button.textContent =
-        count > 0
-            ? `🚫 EXCLUDE CHARACTERS (${count})`
-            : "🚫 EXCLUDE CHARACTERS";
-}
+    const counter =
+      document.getElementById(
+        "excludeCount"
+      );
 
 
-function clearExcluded() {
+    const amount =
+      excludedCharacters.size;
+
+
+    counter.textContent =
+      amount +
+      " EXCLUDED";
+
+  }
+
+
+  function clearExcluded() {
 
     excludedCharacters.clear();
 
     buildHeroList();
-}
+
+  }
 
 
-function excludeAll() {
+  function excludeAll() {
 
-    if (!Array.isArray(characters)) return;
+    characters.forEach(
+      character => {
 
-    characters.forEach(character => {
-        excludedCharacters.add(character.name);
-    });
+        excludedCharacters.add(
+          character.name
+        );
+
+      }
+    );
 
     buildHeroList();
-}
 
+  }
 
-function toggleExcludePanel() {
 
-    const panel =
-        document.getElementById("excludePanel");
+  /* =========================================================
+     ROLE
+  ========================================================= */
 
-    panel.classList.toggle("open");
-}
-
-
-/* =========================================================
-   ROLE
-========================================================= */
-
-function setRole(role) {
-
-    selectedRole = role;
-
-    document
-        .querySelectorAll("[data-role]")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.role === role
-            );
-
-        });
-}
-
-
-/* =========================================================
-   COUNT
-========================================================= */
-
-function setCount(count) {
-
-    selectedCount = count;
-
-    document
-        .querySelectorAll("[data-count]")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                Number(button.dataset.count) === count
-            );
-
-        });
-
-    updateResultsLayout();
-}
-
-
-function updateResultsLayout() {
-
-    const results =
-        document.getElementById("results");
-
-    if (!results) return;
-
-    results.classList.remove(
-        "count-1",
-        "count-2",
-        "count-3"
-    );
-
-    results.classList.add(
-        `count-${selectedCount}`
-    );
-}
-
-
-/* =========================================================
-   AVAILABLE CHARACTERS
-========================================================= */
-
-function getAvailableCharacters() {
-
-    if (!Array.isArray(characters)) {
-        return [];
-    }
-
-    return characters.filter(character => {
-
-        if (
-            excludedCharacters.has(
-                character.name
-            )
-        ) {
-            return false;
-        }
-
-        if (selectedRole === "ALL") {
-            return true;
-        }
-
-        const roles =
-            String(character.role)
-                .split("/")
-                .map(role => role.trim());
-
-        return roles.includes(selectedRole);
-
-    });
-}
-
-
-/* =========================================================
-   UNIQUE RANDOM
-========================================================= */
-
-function getRandomCharacters(pool, amount) {
-
-    const copy = [...pool];
-
-    const selected = [];
-
-    while (
-        selected.length < amount &&
-        copy.length > 0
-    ) {
-
-        const index =
-            Math.floor(
-                Math.random() * copy.length
-            );
-
-        selected.push(
-            copy.splice(index, 1)[0]
-        );
-    }
-
-    return selected;
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function renderCharacters(
-    list,
-    visible = true
-) {
-
-    const container =
-        document.getElementById("results");
-
-    container.innerHTML = "";
-
-    list.forEach((character, index) => {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "result-card" +
-            (visible ? " show" : "");
-
-        const number =
-            document.createElement("div");
-
-        number.className =
-            "result-number";
-
-        number.textContent =
-            `SLOT ${String(index + 1).padStart(2, "0")}`;
-
-        const name =
-            document.createElement("div");
-
-        name.className =
-            "result-name";
-
-        name.textContent =
-            character.name;
-
-        const role =
-            document.createElement("div");
-
-        role.className =
-            "result-role";
-
-        role.textContent =
-            character.role;
-
-        card.appendChild(number);
-        card.appendChild(name);
-        card.appendChild(role);
-
-        container.appendChild(card);
-
-    });
-
-    updateResultsLayout();
-}
-
-
-/* =========================================================
-   RANDOMIZER
-========================================================= */
-
-async function randomizeCharacters() {
+  function setRole(role) {
 
     if (spinning) return;
 
-    initAudio();
+    selectedRole =
+      role;
 
-    const pool =
-        getAvailableCharacters();
-
-    if (pool.length < selectedCount) {
-
-        document.getElementById("status")
-            .textContent =
-            "NOT ENOUGH CHARACTERS";
-
-        return;
-    }
-
-    spinning = true;
-
-    const button =
-        document.getElementById(
-            "randomizeBtn"
-        );
-
-    const stage =
-        document.getElementById("stage");
-
-    const status =
-        document.getElementById("status");
-
-    button.disabled = true;
-
-    stage.classList.add(
-        "randomizing"
-    );
-
-    stage.classList.remove(
-        "winner"
-    );
-
-    status.textContent =
-        "SELECTING";
-
-    const duration = 3000;
-
-    const start =
-        performance.now();
-
-    let lastTick = 0;
-
-    const animate = (time) => {
-
-        const elapsed =
-            time - start;
-
-        const progress =
-            Math.min(
-                elapsed / duration,
-                1
-            );
-
-        const easing =
-            1 - Math.pow(
-                1 - progress,
-                3
-            );
-
-        const interval =
-            45 + easing * 180;
-
-        if (
-            time - lastTick >
-            interval
-        ) {
-
-            const preview =
-                getRandomCharacters(
-                    pool,
-                    selectedCount
-                );
-
-            renderCharacters(
-                preview,
-                true
-            );
-
-            playTick(
-                1 - progress
-            );
-
-            lastTick = time;
-        }
-
-        if (progress < 1) {
-
-            requestAnimationFrame(
-                animate
-            );
-
-        } else {
-
-            finishRandomizer();
-        }
-    };
-
-    requestAnimationFrame(animate);
-}
-
-
-function finishRandomizer() {
-
-    const pool =
-        getAvailableCharacters();
-
-    const finalCharacters =
-        getRandomCharacters(
-            pool,
-            selectedCount
-        );
-
-    renderCharacters(
-        finalCharacters,
-        true
-    );
-
-    document.getElementById("status")
-        .textContent =
-        "SELECTED";
 
     document
-        .getElementById("stage")
-        .classList.remove(
-            "randomizing"
+      .querySelectorAll(
+        ".filter-button"
+      )
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.role === role
         );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     COUNT
+  ========================================================= */
+
+  function setCount(count) {
+
+    if (spinning) return;
+
+    selectedCount =
+      count;
+
 
     document
-        .getElementById("stage")
-        .classList.add(
-            "winner"
+      .querySelectorAll(
+        ".count-button"
+      )
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          Number(button.dataset.count) === count
         );
 
-    playFinalSound();
+      });
 
-    spinning = false;
-
-    document.getElementById(
-        "randomizeBtn"
-    ).disabled = false;
-}
+  }
 
 
-/* =========================================================
-   BROADCAST MODE
-========================================================= */
+  /* =========================================================
+     AVAILABLE CHARACTERS
+  ========================================================= */
 
-function setBroadcastMode(enabled) {
+  function getAvailableCharacters() {
 
-    document.body.classList.toggle(
-        "broadcast-mode",
-        enabled
-    );
-
-    const toggle =
-        document.getElementById(
-            "broadcastToggle"
-        );
-
-    const indicator =
-        document.getElementById(
-            "modeIndicator"
-        );
-
-    if (enabled) {
-
-        toggle.textContent =
-            "EXIT BROADCAST";
-
-        toggle.classList.add(
-            "active"
-        );
-
-        indicator.textContent =
-            "BROADCAST MODE";
-
-    } else {
-
-        toggle.textContent =
-            "BROADCAST MODE";
-
-        toggle.classList.remove(
-            "active"
-        );
-
-        indicator.textContent =
-            "STANDARD MODE";
-    }
-}
-
-
-function toggleBroadcastMode() {
-
-    const enabled =
-        !document.body.classList.contains(
-            "broadcast-mode"
-        );
-
-    setBroadcastMode(enabled);
-
-    updateBroadcastURL(enabled);
-}
-
-
-function updateBroadcastURL(enabled) {
-
-    const url =
-        new URL(
-            window.location.href
-        );
-
-    if (enabled) {
-        url.searchParams.set(
-            "broadcast",
-            "1"
-        );
-    } else {
-        url.searchParams.delete(
-            "broadcast"
-        );
-    }
-
-    window.history.replaceState(
-        {},
-        "",
-        url
-    );
-}
-
-
-/* =========================================================
-   KEYBOARD
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
+    return characters.filter(
+      character => {
 
         if (
-            event.key.toLowerCase() === "b" &&
-            !event.ctrlKey &&
-            !event.altKey &&
-            !event.metaKey
+          excludedCharacters.has(
+            character.name
+          )
         ) {
 
-            toggleBroadcastMode();
+          return false;
 
         }
 
+
         if (
-            event.code === "Space" &&
-            !event.repeat
+          selectedRole === "ALL"
         ) {
 
-            const active =
-                document.activeElement;
-
-            const typing =
-                active &&
-                (
-                    active.tagName === "INPUT" ||
-                    active.tagName === "TEXTAREA"
-                );
-
-            if (!typing) {
-
-                event.preventDefault();
-
-                randomizeCharacters();
-
-            }
+          return true;
 
         }
 
-    }
-);
+
+        return character.role
+          .split("/")
+          .map(
+            role =>
+              role.trim()
+          )
+          .includes(
+            selectedRole
+          );
+
+      }
+    );
+
+  }
 
 
-/* =========================================================
-   INITIALIZATION
-========================================================= */
+  /* =========================================================
+     UNIQUE RANDOM
+  ========================================================= */
 
-function initialize() {
+  function getRandomCharacters(
+    pool,
+    amount
+  ) {
 
-    buildHeroList();
+    const available =
+      [...pool];
 
-    updateResultsLayout();
+    const selected = [];
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
 
-    if (
-        params.get("broadcast") === "1"
+    while (
+      selected.length < amount &&
+      available.length > 0
     ) {
 
-        setBroadcastMode(true);
+      const index =
+        Math.floor(
+          Math.random() *
+          available.length
+        );
+
+
+      selected.push(
+        available[index]
+      );
+
+
+      available.splice(
+        index,
+        1
+      );
 
     }
 
-}
 
-initialize();
+    return selected;
+
+  }
+
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
+
+  function renderCharacters(
+    list,
+    visible = true
+  ) {
+
+    const results =
+      document.getElementById(
+        "results"
+      );
+
+
+    const grid =
+      document.createElement(
+        "div"
+      );
+
+
+    grid.className =
+      "result-grid";
+
+
+    list.forEach(
+      (character, index) => {
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+
+        card.className =
+          "result-card";
+
+
+        card.innerHTML = `
+
+          <div class="result-number">
+            RESULT ${index + 1}
+          </div>
+
+          <div class="character-name">
+            ${character.name}
+          </div>
+
+          <div class="character-role">
+            ${character.role}
+          </div>
+
+        `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+
+    results.innerHTML = "";
+
+    results.appendChild(
+      grid
+    );
+
+
+    if (visible) {
+
+      requestAnimationFrame(
+        () => {
+
+          grid
+            .querySelectorAll(
+              ".result-card"
+            )
+            .forEach(
+              (card, index) => {
+
+                setTimeout(
+                  () => {
+
+                    card.classList.add(
+                      "show"
+                    );
+
+                  },
+                  index * 100
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     RANDOMIZER
+  ========================================================= */
+
+  function randomizeCharacters() {
+
+    if (spinning) return;
+
+
+    initAudio();
+
+
+    const pool =
+      getAvailableCharacters();
+
+
+    if (
+      pool.length < selectedCount
+    ) {
+
+      alert(
+        "No hay suficientes personajes disponibles."
+      );
+
+      return;
+
+    }
+
+
+    spinning =
+      true;
+
+
+    const button =
+      document.getElementById(
+        "randomButton"
+      );
+
+    const display =
+      document.getElementById(
+        "display"
+      );
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+    const statusWrap =
+      document.getElementById(
+        "statusWrap"
+      );
+
+
+    button.disabled =
+      true;
+
+
+    display.classList.remove(
+      "winner"
+    );
+
+    display.classList.add(
+      "randomizing"
+    );
+
+    statusWrap.classList.add(
+      "selecting"
+    );
+
+
+    status.textContent =
+      "SELECTING";
+
+
+    const finalCharacters =
+      getRandomCharacters(
+        pool,
+        selectedCount
+      );
+
+
+    const duration =
+      3000;
+
+    const start =
+      performance.now();
+
+    let lastTick =
+      0;
+
+
+    function animate(now) {
+
+      const elapsed =
+        now - start;
+
+
+      const progress =
+        Math.min(
+          elapsed / duration,
+          1
+        );
+
+
+      /*
+        The randomizer starts fast
+        and progressively slows down.
+      */
+
+      const speed =
+        35 +
+        Math.pow(
+          progress,
+          3
+        ) * 220;
+
+
+      if (
+        now - lastTick >
+        speed
+      ) {
+
+        lastTick =
+          now;
+
+
+        const preview =
+          getRandomCharacters(
+            pool,
+            selectedCount
+          );
+
+
+        renderCharacters(
+          preview,
+          false
+        );
+
+
+        playTick(
+          .5 +
+          progress * .5
+        );
+
+      }
+
+
+      if (
+        progress < 1
+      ) {
+
+        requestAnimationFrame(
+          animate
+        );
+
+      } else {
+
+        finish();
+
+      }
+
+    }
+
+
+    function finish() {
+
+      renderCharacters(
+        finalCharacters,
+        true
+      );
+
+
+      status.textContent =
+        "SELECTED";
+
+
+      statusWrap.classList.remove(
+        "selecting"
+      );
+
+
+      display.classList.remove(
+        "randomizing"
+      );
+
+      display.classList.add(
+        "winner"
+      );
+
+
+      playFinalSound();
+
+
+      button.disabled =
+        false;
+
+      spinning =
+        false;
+
+    }
+
+
+    requestAnimationFrame(
+      animate
+    );
+
+  }
+
+
+  /* =========================================================
+     INITIALIZE
+  ========================================================= */
+
+  buildHeroList();
 
 </script>
 
