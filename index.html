@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,6 +44,7 @@
     }
 
 
+
     /* =========================================================
        BASE
     ========================================================= */
@@ -82,6 +84,7 @@
 
       overflow-x: hidden;
     }
+
 
 
     /* =========================================================
@@ -138,6 +141,7 @@
     }
 
 
+
     /* =========================================================
        APP
     ========================================================= */
@@ -148,11 +152,17 @@
 
       width: min(1120px, 94%);
 
+      min-height: 100vh;
+
       margin: auto;
 
       padding:
         28px 0 60px;
+
+      display: flex;
+      flex-direction: column;
     }
+
 
 
     /* =========================================================
@@ -163,38 +173,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
 
       margin-bottom: 15px;
-    }
-
-    .phoenix-mark {
-      width: 28px;
-      height: 28px;
-
-      position: relative;
-
-      transform: rotate(45deg);
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold),
-          var(--orange) 48%,
-          var(--red)
-        );
-
-      box-shadow:
-        0 0 25px rgba(226,27,35,.25);
-    }
-
-    .phoenix-mark::after {
-      content: "";
-
-      position: absolute;
-      inset: 5px;
-
-      background: var(--black);
     }
 
     .brand {
@@ -208,6 +188,7 @@
     .brand span {
       color: var(--gold);
     }
+
 
 
     /* =========================================================
@@ -310,6 +291,113 @@
     }
 
 
+
+    /* =========================================================
+       BROADCAST BAR
+    ========================================================= */
+
+    .broadcast-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 14px;
+
+      padding:
+        8px 10px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      background:
+        rgba(0,0,0,.28);
+    }
+
+    .broadcast-status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      color: #77777e;
+
+      font-size: 8px;
+      font-weight: 950;
+
+      letter-spacing: 2px;
+    }
+
+    .broadcast-status span {
+      width: 6px;
+      height: 6px;
+
+      flex-shrink: 0;
+
+      background: var(--gold);
+
+      transform: rotate(45deg);
+
+      box-shadow:
+        0 0 10px rgba(255,199,44,.35);
+    }
+
+    .broadcast-button {
+      appearance: none;
+
+      padding:
+        7px 11px;
+
+      border:
+        1px solid rgba(255,199,44,.22);
+
+      border-radius: 2px;
+
+      background:
+        rgba(255,199,44,.035);
+
+      color: #aaaab0;
+
+      font-size: 8px;
+      font-weight: 950;
+
+      letter-spacing: 1.5px;
+
+      cursor: pointer;
+
+      transition:
+        .18s ease;
+    }
+
+    .broadcast-button:hover {
+      color: var(--white);
+
+      border-color:
+        rgba(255,199,44,.55);
+
+      background:
+        rgba(255,199,44,.07);
+    }
+
+    .broadcast-button.active {
+      color: var(--black);
+
+      border-color:
+        var(--gold);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-soft),
+          var(--gold)
+        );
+
+      box-shadow:
+        0 7px 22px rgba(255,199,44,.14);
+    }
+
+
+
     /* =========================================================
        SECTION LABEL
     ========================================================= */
@@ -345,6 +433,7 @@
     }
 
 
+
     /* =========================================================
        CONTROLS
     ========================================================= */
@@ -369,10 +458,6 @@
 
       overflow: hidden;
     }
-
-    /*
-      Dynamic diagonal SPS-style accent.
-    */
 
     .controls::before {
       content: "";
@@ -415,7 +500,6 @@
       pointer-events: none;
     }
 
-
     .control-group + .control-group {
       margin-top: 22px;
     }
@@ -432,6 +516,7 @@
 
       text-transform: uppercase;
     }
+
 
 
     /* =========================================================
@@ -519,6 +604,7 @@
     }
 
 
+
     .exclude-button {
 
       width: 100%;
@@ -544,6 +630,7 @@
       border-color:
         var(--red);
     }
+
 
 
     /* =========================================================
@@ -626,7 +713,6 @@
       font-size: 8px;
     }
 
-
     .hero-list {
       display: grid;
 
@@ -656,7 +742,6 @@
     .hero-list::-webkit-scrollbar-thumb {
       background: #3a3a40;
     }
-
 
     .hero-option {
       position: relative;
@@ -756,6 +841,7 @@
     }
 
 
+
     /* =========================================================
        STATUS
     ========================================================= */
@@ -815,6 +901,7 @@
     }
 
 
+
     /* =========================================================
        MAIN DISPLAY
     ========================================================= */
@@ -825,6 +912,10 @@
       margin: 15px auto 24px;
 
       min-height: 430px;
+
+      width: 100%;
+
+      flex: 0 1 auto;
 
       display: flex;
 
@@ -850,11 +941,6 @@
       transition:
         .35s ease;
     }
-
-
-    /*
-      Comic / broadcast diagonal shape.
-    */
 
     .display::before {
       content: "";
@@ -894,7 +980,10 @@
     }
 
 
-    /* Decorative corners */
+
+    /* =========================================================
+       DECORATIVE CORNERS
+    ========================================================= */
 
     .display-corner {
       position: absolute;
@@ -951,6 +1040,7 @@
     }
 
 
+
     /* =========================================================
        RESULT AREA
     ========================================================= */
@@ -982,6 +1072,7 @@
 
       margin: auto;
     }
+
 
 
     /* =========================================================
@@ -1029,10 +1120,6 @@
       transition:
         .35s ease;
     }
-
-    /*
-      Red diagonal slash.
-    */
 
     .result-card::before {
       content: "";
@@ -1082,7 +1169,6 @@
         scale(1)
         translateY(0);
     }
-
 
     .result-number {
       position: relative;
@@ -1146,14 +1232,6 @@
     }
 
 
-    /* =========================================================
-       READY STATE
-    ========================================================= */
-
-    .result-card.show:has(.character-name:first-of-type) {
-      /* intentionally subtle */
-    }
-
 
     /* =========================================================
        RANDOMIZING
@@ -1185,6 +1263,7 @@
           translateX(2px);
       }
     }
+
 
 
     /* =========================================================
@@ -1256,6 +1335,7 @@
     }
 
 
+
     /* =========================================================
        RANDOM BUTTON
     ========================================================= */
@@ -1310,10 +1390,6 @@
         opacity .15s ease;
     }
 
-    /*
-      Button highlight.
-    */
-
     .random-button::before {
       content: "";
 
@@ -1367,6 +1443,7 @@
     }
 
 
+
     .hint {
       margin-top: 15px;
 
@@ -1380,6 +1457,7 @@
 
       letter-spacing: 2px;
     }
+
 
 
     /* =========================================================
@@ -1507,6 +1585,336 @@
     }
 
 
+
+    /* =========================================================
+       BROADCAST MODE
+    ========================================================= */
+
+    body.broadcast-mode {
+      height: 100vh;
+      min-height: 100vh;
+
+      overflow: hidden;
+    }
+
+    body.broadcast-mode .app {
+      width: min(1500px, 94vw);
+
+      height: 100vh;
+      min-height: 0;
+
+      padding:
+        10px 0 12px;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.broadcast-mode .hero-header {
+      flex-shrink: 0;
+
+      padding:
+        3px 0 8px;
+    }
+
+    body.broadcast-mode .topline {
+      margin-bottom: 7px;
+    }
+
+    body.broadcast-mode .brand {
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+
+    body.broadcast-mode .eyebrow {
+      margin-bottom: 7px;
+
+      font-size: 7px;
+      letter-spacing: 2.5px;
+    }
+
+    body.broadcast-mode .eyebrow::before,
+    body.broadcast-mode .eyebrow::after {
+      width: 20px;
+    }
+
+    body.broadcast-mode h1 {
+      font-size:
+        clamp(38px, 5vw, 70px);
+    }
+
+    body.broadcast-mode .title-accent {
+      margin-top: 7px;
+
+      font-size:
+        clamp(15px, 2vw, 23px);
+
+      letter-spacing: 5px;
+    }
+
+    body.broadcast-mode .subtitle {
+      margin-top: 8px;
+
+      font-size: 8px;
+      letter-spacing: 3px;
+    }
+
+    body.broadcast-mode .broadcast-bar {
+      flex-shrink: 0;
+
+      margin-bottom: 7px;
+
+      padding:
+        6px 9px;
+    }
+
+    body.broadcast-mode .broadcast-status {
+      font-size: 7px;
+      letter-spacing: 1.8px;
+    }
+
+    body.broadcast-mode .broadcast-button {
+      padding:
+        6px 10px;
+
+      font-size: 7px;
+    }
+
+    body.broadcast-mode .controls,
+    body.broadcast-mode .hint,
+    body.broadcast-mode .creator-section {
+      display: none;
+    }
+
+    body.broadcast-mode .status-wrap {
+      flex-shrink: 0;
+
+      margin-top: 5px;
+      margin-bottom: 0;
+
+      gap: 8px;
+    }
+
+    body.broadcast-mode .status {
+      font-size: 8px;
+      letter-spacing: 3px;
+    }
+
+    body.broadcast-mode .display {
+      flex: 1 1 auto;
+
+      min-height: 0;
+
+      margin:
+        7px auto 12px;
+
+      width: 100%;
+    }
+
+    body.broadcast-mode .results {
+      padding:
+        24px 30px;
+    }
+
+    body.broadcast-mode .result-grid {
+      max-width: 1250px;
+
+      gap: clamp(14px, 1.5vw, 24px);
+    }
+
+    body.broadcast-mode .result-card {
+      min-height:
+        clamp(220px, 43vh, 500px);
+
+      padding:
+        24px 20px;
+    }
+
+    body.broadcast-mode .result-number {
+      font-size: 8px;
+    }
+
+    body.broadcast-mode .character-name {
+      font-size:
+        clamp(34px, 5.5vw, 78px);
+
+      max-width: 95%;
+    }
+
+    body.broadcast-mode .character-role {
+      margin-top: 16px;
+
+      font-size: 8px;
+    }
+
+    body.broadcast-mode .random-button {
+      flex-shrink: 0;
+
+      width:
+        min(460px, 100%);
+
+      padding:
+        15px 24px;
+
+      font-size: 13px;
+    }
+
+    body.broadcast-mode .display-corner {
+      opacity: .95;
+    }
+
+
+
+    /* =========================================================
+       DESKTOP VIEWPORT FIT
+    ========================================================= */
+
+    @media (min-width: 851px) {
+
+      .app {
+        min-height: 100vh;
+      }
+
+      .display {
+        min-height:
+          clamp(300px, 38vh, 430px);
+      }
+
+      .creator-section {
+        margin-top:
+          clamp(22px, 4vh, 55px);
+      }
+
+    }
+
+
+
+    /* =========================================================
+       SHORT DESKTOP SCREENS
+       1366 × 768 and similar
+    ========================================================= */
+
+    @media (
+      min-width: 851px
+    ) and (
+      max-height: 800px
+    ) {
+
+      .app {
+        padding:
+          14px 0 22px;
+      }
+
+      .topline {
+        margin-bottom: 8px;
+      }
+
+      .hero-header {
+        padding:
+          4px 0 13px;
+      }
+
+      .eyebrow {
+        margin-bottom: 8px;
+      }
+
+      h1 {
+        font-size:
+          clamp(38px, 6vw, 68px);
+      }
+
+      .title-accent {
+        margin-top: 7px;
+
+        font-size: 20px;
+      }
+
+      .subtitle {
+        margin-top: 8px;
+      }
+
+      .broadcast-bar {
+        margin-bottom: 8px;
+      }
+
+      .controls {
+        padding: 14px;
+      }
+
+      .control-group + .control-group {
+        margin-top: 13px;
+      }
+
+      .filter-button,
+      .count-button {
+        padding:
+          9px 13px;
+      }
+
+      .exclude-button {
+        margin-top: 13px;
+
+        padding:
+          9px 13px;
+      }
+
+      .status-wrap {
+        margin-top: 12px;
+      }
+
+      .display {
+        min-height:
+          clamp(250px, 31vh, 330px);
+
+        margin:
+          10px auto 15px;
+      }
+
+      .results {
+        padding:
+          24px 20px;
+      }
+
+      .result-card {
+        min-height:
+          clamp(190px, 25vh, 235px);
+
+        padding:
+          18px 14px;
+      }
+
+      .character-name {
+        font-size:
+          clamp(25px, 4vw, 43px);
+      }
+
+      .random-button {
+        padding:
+          15px 24px;
+      }
+
+      .hint {
+        margin-top: 9px;
+      }
+
+      .creator-section {
+        margin-top: 20px;
+
+        padding-top: 14px;
+      }
+
+      .creator-links {
+        margin-top: 9px;
+      }
+
+      .creator-tag {
+        margin-top: 10px;
+      }
+
+    }
+
+
+
     /* =========================================================
        ACCESSIBILITY
     ========================================================= */
@@ -1519,6 +1927,7 @@
       outline-offset:
         3px;
     }
+
 
 
     /* =========================================================
@@ -1536,6 +1945,7 @@
       }
 
     }
+
 
 
     /* =========================================================
@@ -1556,11 +1966,6 @@
         letter-spacing: 3px;
       }
 
-      .phoenix-mark {
-        width: 22px;
-        height: 22px;
-      }
-
       h1 {
         font-size:
           clamp(39px, 14vw, 65px);
@@ -1579,6 +1984,21 @@
         font-size: 8px;
 
         letter-spacing: 2.5px;
+      }
+
+      .broadcast-bar {
+        padding: 7px;
+      }
+
+      .broadcast-status {
+        font-size: 7px;
+      }
+
+      .broadcast-button {
+        font-size: 7px;
+
+        padding:
+          7px 9px;
       }
 
       .controls {
@@ -1655,7 +2075,66 @@
       .creator-link {
         min-width: 82px;
       }
+
+
+
+      /* Mobile broadcast */
+
+      body.broadcast-mode .app {
+        width: 94%;
+        padding:
+          8px 0 9px;
+      }
+
+      body.broadcast-mode .hero-header {
+        padding:
+          2px 0 7px;
+      }
+
+      body.broadcast-mode h1 {
+        font-size:
+          clamp(34px, 12vw, 58px);
+      }
+
+      body.broadcast-mode .title-accent {
+        font-size: 14px;
+        letter-spacing: 4px;
+      }
+
+      body.broadcast-mode .subtitle {
+        font-size: 7px;
+        letter-spacing: 2px;
+      }
+
+      body.broadcast-mode .display {
+        margin:
+          6px auto 9px;
+      }
+
+      body.broadcast-mode .results {
+        padding:
+          18px 10px;
+      }
+
+      body.broadcast-mode .result-card {
+        min-height:
+          clamp(180px, 30vh, 250px);
+      }
+
+      body.broadcast-mode .character-name {
+        font-size:
+          clamp(29px, 10vw, 48px);
+      }
+
+      body.broadcast-mode .random-button {
+        padding:
+          13px 20px;
+
+        font-size: 11px;
+      }
+
     }
+
 
 
     @media(max-width: 390px) {
@@ -1690,8 +2169,6 @@
 
     <div class="topline">
 
-      <div class="phoenix-mark"></div>
-
       <div class="brand">
         SUPER <span>PHOENIX</span> SPORTS
       </div>
@@ -1717,6 +2194,30 @@
     </div>
 
   </header>
+
+
+
+  <!-- =======================================================
+       BROADCAST
+  ======================================================== -->
+
+  <div class="broadcast-bar">
+
+    <div class="broadcast-status" id="broadcastStatus">
+      <span></span>
+      STANDARD MODE
+    </div>
+
+    <button
+      class="broadcast-button"
+      id="broadcastButton"
+      onclick="toggleBroadcastMode()"
+    >
+      BROADCAST MODE
+    </button>
+
+  </div>
+
 
 
   <!-- =======================================================
@@ -1869,6 +2370,7 @@
   </section>
 
 
+
   <!-- =======================================================
        STATUS
   ======================================================== -->
@@ -1888,6 +2390,7 @@
     </div>
 
   </div>
+
 
 
   <!-- =======================================================
@@ -1935,6 +2438,7 @@
   </section>
 
 
+
   <!-- =======================================================
        RANDOM BUTTON
   ======================================================== -->
@@ -1953,10 +2457,9 @@
   </div>
 
 
+
   <!-- =======================================================
-       CREATOR / COMMUNITY
-       HOLOSIM INSPIRED ONLY IN CONTENT STRUCTURE,
-       NOT IN VISUAL STYLE.
+       AUTHOR / COMMUNITY
   ======================================================== -->
 
   <footer class="creator-section">
@@ -2025,6 +2528,7 @@
 </main>
 
 
+
 <!-- =========================================================
      CHARACTER DATABASE
      NO TOCAR: gestionado externamente
@@ -2045,6 +2549,7 @@
 
   let excludedCharacters =
     new Set();
+
 
 
   /* =========================================================
@@ -2072,6 +2577,7 @@
     }
 
   }
+
 
 
   function playTick(intensity = 1) {
@@ -2123,6 +2629,7 @@
     );
 
   }
+
 
 
   function playFinalSound() {
@@ -2229,6 +2736,7 @@
   }
 
 
+
   /* =========================================================
      EXCLUSION PANEL
   ========================================================= */
@@ -2311,6 +2819,7 @@
   }
 
 
+
   function toggleExcludePanel() {
 
     const panel =
@@ -2334,6 +2843,7 @@
     }
 
   }
+
 
 
   function toggleExcluded(
@@ -2371,6 +2881,7 @@
   }
 
 
+
   function updateExcludeCount() {
 
     const counter =
@@ -2390,6 +2901,7 @@
   }
 
 
+
   function clearExcluded() {
 
     excludedCharacters.clear();
@@ -2397,6 +2909,7 @@
     buildHeroList();
 
   }
+
 
 
   function excludeAll() {
@@ -2414,6 +2927,7 @@
     buildHeroList();
 
   }
+
 
 
   /* =========================================================
@@ -2444,6 +2958,7 @@
   }
 
 
+
   /* =========================================================
      COUNT
   ========================================================= */
@@ -2470,6 +2985,7 @@
       });
 
   }
+
 
 
   /* =========================================================
@@ -2517,6 +3033,7 @@
   }
 
 
+
   /* =========================================================
      UNIQUE RANDOM
   ========================================================= */
@@ -2560,6 +3077,7 @@
     return selected;
 
   }
+
 
 
   /* =========================================================
@@ -2664,6 +3182,7 @@
     }
 
   }
+
 
 
   /* =========================================================
@@ -2771,11 +3290,6 @@
         );
 
 
-      /*
-        The randomizer starts fast
-        and progressively slows down.
-      */
-
       const speed =
         35 +
         Math.pow(
@@ -2876,13 +3390,176 @@
   }
 
 
+
+  /* =========================================================
+     BROADCAST MODE
+  ========================================================= */
+
+  function setBroadcastMode(enabled) {
+
+    document.body.classList.toggle(
+      "broadcast-mode",
+      enabled
+    );
+
+
+    const button =
+      document.getElementById(
+        "broadcastButton"
+      );
+
+    const status =
+      document.getElementById(
+        "broadcastStatus"
+      );
+
+
+    if (!button || !status) {
+      return;
+    }
+
+
+    if (enabled) {
+
+      button.textContent =
+        "EXIT BROADCAST";
+
+      button.classList.add(
+        "active"
+      );
+
+      status.innerHTML =
+        "<span></span> BROADCAST MODE";
+
+    } else {
+
+      button.textContent =
+        "BROADCAST MODE";
+
+      button.classList.remove(
+        "active"
+      );
+
+      status.innerHTML =
+        "<span></span> STANDARD MODE";
+
+    }
+
+  }
+
+
+
+  function toggleBroadcastMode() {
+
+    const enabled =
+      !document.body.classList.contains(
+        "broadcast-mode"
+      );
+
+
+    setBroadcastMode(
+      enabled
+    );
+
+
+    const url =
+      new URL(
+        window.location.href
+      );
+
+
+    if (enabled) {
+
+      url.searchParams.set(
+        "broadcast",
+        "1"
+      );
+
+    } else {
+
+      url.searchParams.delete(
+        "broadcast"
+      );
+
+    }
+
+
+    window.history.replaceState(
+      {},
+      "",
+      url
+    );
+
+  }
+
+
+
+  /* =========================================================
+     BROADCAST KEYBOARD SHORTCUT
+     B = ON / OFF
+  ========================================================= */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key.toLowerCase() === "b" &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey
+      ) {
+
+        const activeElement =
+          document.activeElement;
+
+        const isTyping =
+          activeElement &&
+          (
+            activeElement.tagName === "INPUT" ||
+            activeElement.tagName === "TEXTAREA" ||
+            activeElement.isContentEditable
+          );
+
+
+        if (!isTyping) {
+
+          toggleBroadcastMode();
+
+        }
+
+      }
+
+    }
+  );
+
+
+
   /* =========================================================
      INITIALIZE
   ========================================================= */
 
+  const urlParams =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
   buildHeroList();
+
+
+  if (
+    urlParams.get("broadcast") === "1"
+  ) {
+
+    setBroadcastMode(
+      true
+    );
+
+  }
 
 </script>
 
 </body>
 </html>
+```
