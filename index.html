@@ -7,28 +7,30 @@
   <title>Marvel Rivals Randomizer</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
     :root {
       --bg: #05060a;
-      --panel: #10131b;
-      --line: #292e3b;
+      --panel: #0d1017;
+      --panel2: #121722;
+      --line: #29303d;
       --text: #f5f7ff;
-      --muted: #7f8798;
+      --muted: #7e8798;
+      --accent: #ffffff;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      overflow-x: hidden;
 
       background:
         radial-gradient(
-          circle at 50% 35%,
-          #202633 0%,
-          #0c0f16 38%,
+          circle at 50% 20%,
+          #202735 0%,
+          #0b0e15 38%,
           #05060a 75%
         );
 
@@ -38,22 +40,19 @@
         Arial,
         Helvetica,
         sans-serif;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .app {
-      width: min(950px, 92%);
+      width: min(1000px, 94%);
+      margin: auto;
+      padding: 35px 0 50px;
       text-align: center;
-      padding: 40px 0;
     }
 
     .brand {
       color: var(--muted);
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 10px;
+      font-weight: 900;
       letter-spacing: 5px;
       margin-bottom: 12px;
     }
@@ -61,30 +60,117 @@
     h1 {
       margin: 0;
 
-      font-size: clamp(34px, 8vw, 78px);
-      line-height: 0.95;
+      font-size: clamp(35px, 9vw, 78px);
+      line-height: .9;
 
-      letter-spacing: 4px;
-      font-weight: 900;
+      font-weight: 950;
+      letter-spacing: 3px;
     }
 
-    .status {
-      margin-top: 15px;
-      height: 20px;
+    .subtitle {
+      margin-top: 14px;
 
       color: var(--muted);
+
       font-size: 11px;
-      letter-spacing: 4px;
       font-weight: bold;
+      letter-spacing: 4px;
     }
+
+
+    /* =========================
+       CONTROLS
+    ========================= */
+
+    .controls {
+      margin-top: 32px;
+
+      padding: 18px;
+
+      border: 1px solid var(--line);
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,.012)
+        );
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.3);
+    }
+
+    .control-title {
+      margin-bottom: 12px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .role-buttons,
+    .count-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-button,
+    .count-button {
+      border: 1px solid var(--line);
+
+      background: #090c12;
+      color: #929aaa;
+
+      padding: 11px 15px;
+
+      border-radius: 10px;
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      transition:
+        .18s ease;
+    }
+
+    .filter-button:hover,
+    .count-button:hover {
+      border-color: #626b7c;
+      color: white;
+    }
+
+    .filter-button.active,
+    .count-button.active {
+      background: #f3f4f6;
+      color: #05060a;
+      border-color: #f3f4f6;
+
+      box-shadow:
+        0 0 25px rgba(255,255,255,.08);
+    }
+
+    .control-group + .control-group {
+      margin-top: 20px;
+    }
+
+
+    /* =========================
+       DISPLAY
+    ========================= */
 
     .display {
       position: relative;
 
-      margin: 40px auto 30px;
+      margin: 30px auto;
 
-      width: 100%;
-      min-height: 330px;
+      min-height: 350px;
 
       border: 1px solid var(--line);
       border-radius: 28px;
@@ -92,9 +178,9 @@
       background:
         radial-gradient(
           circle at 50% 40%,
-          #242b39 0%,
+          #252d3b 0%,
           #11151e 42%,
-          #090b10 80%
+          #080a0f 80%
         );
 
       display: flex;
@@ -104,24 +190,22 @@
       overflow: hidden;
 
       box-shadow:
-        0 30px 100px rgba(0,0,0,0.5),
-        inset 0 0 80px rgba(255,255,255,0.025);
+        0 30px 100px rgba(0,0,0,.55),
+        inset 0 0 100px rgba(255,255,255,.025);
 
       transition:
-        box-shadow 0.4s ease,
-        border-color 0.4s ease;
+        .4s ease;
     }
 
     .display::before {
       content: "";
 
       position: absolute;
-      inset: 20px;
+      inset: 18px;
 
-      border: 1px solid rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,.045);
+
       border-radius: 20px;
-
-      pointer-events: none;
     }
 
     .display::after {
@@ -129,659 +213,1078 @@
 
       position: absolute;
 
-      width: 500px;
-      height: 500px;
+      width: 550px;
+      height: 550px;
 
       background:
         radial-gradient(
           circle,
-          rgba(255,255,255,0.07),
-          transparent 65%
+          rgba(255,255,255,.07),
+          transparent 67%
         );
 
       pointer-events: none;
     }
 
-    .character {
+
+    /* =========================
+       RESULTS
+    ========================= */
+
+    .results {
       position: relative;
-      z-index: 2;
+      z-index: 3;
+
+      width: 100%;
+
+      padding: 35px 20px;
+    }
+
+    .result-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap: 18px;
+
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .result-card {
+      padding: 25px 15px;
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.025);
+
+      box-shadow:
+        inset 0 0 40px rgba(255,255,255,.015);
+
+      opacity: 0;
+
+      transform:
+        scale(.85)
+        translateY(15px);
 
       transition:
-        transform 0.15s ease,
-        filter 0.15s ease;
+        .35s ease;
+    }
+
+    .result-card.show {
+      opacity: 1;
+
+      transform:
+        scale(1)
+        translateY(0);
+    }
+
+    .result-number {
+      color: #626b7c;
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 3px;
     }
 
     .character-name {
-      font-size: clamp(38px, 10vw, 95px);
-      font-weight: 900;
-      letter-spacing: 3px;
+      margin-top: 12px;
+
+      font-size: clamp(25px, 6vw, 52px);
+
+      line-height: .95;
+
+      font-weight: 950;
+      letter-spacing: 2px;
 
       text-shadow:
-        0 0 30px rgba(255,255,255,0.12);
+        0 0 30px rgba(255,255,255,.12);
     }
 
     .character-role {
-      margin-top: 14px;
+      margin-top: 12px;
 
       color: var(--muted);
 
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 6px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 3px;
     }
 
-    .randomizing .character {
-      transform: scale(1.025);
-      filter: blur(0.4px);
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    .randomizing .result-card {
+      opacity: 1;
+      transform: scale(1.02);
     }
 
     .winner {
-      border-color: rgba(255,255,255,0.28);
+      border-color:
+        rgba(255,255,255,.3);
 
       box-shadow:
-        0 0 70px rgba(255,255,255,0.08),
-        0 30px 100px rgba(0,0,0,0.6),
-        inset 0 0 100px rgba(255,255,255,0.035);
+        0 0 70px rgba(255,255,255,.08),
+        0 30px 100px rgba(0,0,0,.6),
+        inset 0 0 100px rgba(255,255,255,.04);
     }
 
-    .winner .character {
-      animation: winner 0.7s ease forwards;
+    .winner .result-card.show {
+      animation:
+        winner .65s ease forwards;
     }
 
     @keyframes winner {
 
       0% {
-        transform: scale(0.8);
-        opacity: 0;
-        filter: blur(12px);
+        transform:
+          scale(.72)
+          translateY(10px);
+
+        filter:
+          blur(12px);
       }
 
       55% {
-        transform: scale(1.12);
-        opacity: 1;
-        filter: blur(0);
+        transform:
+          scale(1.08)
+          translateY(0);
+
+        filter:
+          blur(0);
       }
 
       100% {
-        transform: scale(1);
+        transform:
+          scale(1);
       }
 
     }
 
-    button {
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status {
+      height: 18px;
+
+      margin-top: 18px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    .random-button {
       appearance: none;
+
       border: 0;
 
-      padding: 21px 48px;
+      width: min(420px, 100%);
+
+      padding: 20px;
 
       border-radius: 14px;
 
-      background: #f4f5f7;
-      color: #07080b;
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff,
+          #dfe2e8
+        );
 
-      font-size: 16px;
-      font-weight: 900;
+      color: #05060a;
+
+      font-size: 15px;
+      font-weight: 950;
+
       letter-spacing: 3px;
 
       cursor: pointer;
 
       box-shadow:
-        0 12px 35px rgba(0,0,0,0.35);
+        0 15px 45px rgba(0,0,0,.4);
 
       transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        opacity 0.15s ease;
+        transform .15s ease,
+        box-shadow .15s ease,
+        opacity .15s ease;
     }
 
-    button:hover {
-      transform: translateY(-2px);
+    .random-button:hover {
+      transform:
+        translateY(-2px);
 
       box-shadow:
-        0 16px 45px rgba(0,0,0,0.45);
+        0 20px 55px rgba(0,0,0,.5);
     }
 
-    button:active {
-      transform: scale(0.97);
+    .random-button:active {
+      transform:
+        scale(.97);
     }
 
-    button:disabled {
+    .random-button:disabled {
+      opacity: .55;
       cursor: default;
-      opacity: 0.7;
     }
+
 
     .hint {
-      margin-top: 22px;
+      margin-top: 20px;
 
-      color: #555c6c;
+      color: #505867;
 
-      font-size: 10px;
+      font-size: 9px;
+
+      font-weight: bold;
+
       letter-spacing: 2px;
     }
 
-    @media (max-width: 600px) {
+
+    @media(max-width:600px) {
 
       .app {
-        padding: 25px 0;
+        padding-top: 25px;
       }
 
       .display {
-        min-height: 280px;
+        min-height: 330px;
         border-radius: 22px;
       }
 
-      button {
-        width: 100%;
+      .controls {
+        padding: 14px;
+      }
+
+      .filter-button,
+      .count-button {
+        flex: 1;
+        min-width: 90px;
       }
 
     }
+
   </style>
 </head>
 
 
 <body>
 
-  <main class="app">
+<main class="app">
 
-    <div class="brand">
-      SUPER PHOENIX SPORTS
+  <div class="brand">
+    SUPER PHOENIX SPORTS
+  </div>
+
+  <h1>
+    MARVEL RIVALS
+  </h1>
+
+  <div class="subtitle">
+    ESPORTS RANDOMIZER
+  </div>
+
+
+  <!-- CONTROLES -->
+
+  <section class="controls">
+
+    <div class="control-group">
+
+      <div class="control-title">
+        ROLE
+      </div>
+
+      <div class="role-buttons">
+
+        <button
+          class="filter-button active"
+          data-role="ALL"
+          onclick="setRole('ALL')"
+        >
+          TODOS
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="VANGUARD"
+          onclick="setRole('VANGUARD')"
+        >
+          🛡 VANGUARD
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="DUELIST"
+          onclick="setRole('DUELIST')"
+        >
+          ⚔ DUELIST
+        </button>
+
+        <button
+          class="filter-button"
+          data-role="STRATEGIST"
+          onclick="setRole('STRATEGIST')"
+        >
+          ◆ STRATEGIST
+        </button>
+
+      </div>
+
     </div>
 
-    <h1>
-      MARVEL RIVALS
-    </h1>
+
+    <div class="control-group">
+
+      <div class="control-title">
+        NUMBER OF CHARACTERS
+      </div>
+
+      <div class="count-buttons">
+
+        <button
+          class="count-button active"
+          data-count="1"
+          onclick="setCount(1)"
+        >
+          1
+        </button>
+
+        <button
+          class="count-button"
+          data-count="2"
+          onclick="setCount(2)"
+        >
+          2
+        </button>
+
+        <button
+          class="count-button"
+          data-count="3"
+          onclick="setCount(3)"
+        >
+          3
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div
+    class="status"
+    id="status"
+  >
+    READY
+  </div>
+
+
+  <!-- RESULTADO -->
+
+  <section
+    class="display"
+    id="display"
+  >
 
     <div
-      class="status"
-      id="status"
-    >
-      RANDOMIZER
-    </div>
-
-
-    <section
-      class="display"
-      id="display"
+      class="results"
+      id="results"
     >
 
-      <div class="character">
+      <div class="result-grid">
 
-        <div
-          class="character-name"
-          id="characterName"
-        >
-          READY
-        </div>
+        <div class="result-card show">
 
-        <div
-          class="character-role"
-          id="characterRole"
-        >
-          PRESS RANDOMIZE
+          <div class="result-number">
+            READY
+          </div>
+
+          <div class="character-name">
+            ?
+          </div>
+
+          <div class="character-role">
+            SELECT YOUR OPTIONS
+          </div>
+
         </div>
 
       </div>
 
-    </section>
-
-
-    <button
-      id="randomButton"
-      onclick="randomizeCharacter()"
-    >
-      ⚡ RANDOMIZE
-    </button>
-
-
-    <div class="hint">
-      SUPER PHOENIX SPORTS • MARVEL RIVALS RANDOMIZER
     </div>
 
-  </main>
+  </section>
 
 
-  <!--
-    Los personajes están en un archivo separado.
-  -->
-
-  <script src="characters.js"></script>
-
-
-  <script>
-
-    /*
-      ============================================
-      AUDIO
-      ============================================
-    */
-
-    let audioContext = null;
+  <button
+    class="random-button"
+    id="randomButton"
+    onclick="randomizeCharacters()"
+  >
+    ⚡ RANDOMIZE
+  </button>
 
 
-    function initAudio() {
+  <div class="hint">
+    SUPER PHOENIX SPORTS • MARVEL RIVALS
+  </div>
 
-      if (!audioContext) {
+</main>
 
-        audioContext =
-          new (
-            window.AudioContext ||
-            window.webkitAudioContext
-          )();
 
-      }
+<script src="characters.js"></script>
 
-      if (audioContext.state === "suspended") {
-        audioContext.resume();
-      }
+
+<script>
+
+  let selectedRole = "ALL";
+
+  let selectedCount = 1;
+
+  let spinning = false;
+
+  let audioContext = null;
+
+
+  /* =========================
+     AUDIO
+  ========================= */
+
+  function initAudio() {
+
+    if (!audioContext) {
+
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
+    }
+
+    if (
+      audioContext.state === "suspended"
+    ) {
+
+      audioContext.resume();
+
+    }
+
+  }
+
+
+  function playTick(intensity = 1) {
+
+    if (!audioContext) return;
+
+    const now =
+      audioContext.currentTime;
+
+    const oscillator =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    oscillator.type =
+      "triangle";
+
+    oscillator.frequency.setValueAtTime(
+      180 + intensity * 100,
+      now
+    );
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.06 * intensity,
+      now + .005
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + .05
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      audioContext.destination
+    );
+
+    oscillator.start(now);
+
+    oscillator.stop(
+      now + .055
+    );
+
+  }
+
+
+  function playFinalSound() {
+
+    if (!audioContext) return;
+
+    const now =
+      audioContext.currentTime;
+
+
+    const bass =
+      audioContext.createOscillator();
+
+    const bassGain =
+      audioContext.createGain();
+
+    bass.type =
+      "sine";
+
+    bass.frequency.setValueAtTime(
+      110,
+      now
+    );
+
+    bass.frequency.exponentialRampToValueAtTime(
+      45,
+      now + .5
+    );
+
+    bassGain.gain.setValueAtTime(
+      .0001,
+      now
+    );
+
+    bassGain.gain.exponentialRampToValueAtTime(
+      .35,
+      now + .02
+    );
+
+    bassGain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now + .55
+    );
+
+    bass.connect(
+      bassGain
+    );
+
+    bassGain.connect(
+      audioContext.destination
+    );
+
+    bass.start(now);
+
+    bass.stop(
+      now + .6
+    );
+
+
+    const shine =
+      audioContext.createOscillator();
+
+    const shineGain =
+      audioContext.createGain();
+
+    shine.type =
+      "triangle";
+
+    shine.frequency.setValueAtTime(
+      450,
+      now
+    );
+
+    shine.frequency.exponentialRampToValueAtTime(
+      950,
+      now + .35
+    );
+
+    shineGain.gain.setValueAtTime(
+      .0001,
+      now
+    );
+
+    shineGain.gain.exponentialRampToValueAtTime(
+      .12,
+      now + .02
+    );
+
+    shineGain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now + .4
+    );
+
+    shine.connect(
+      shineGain
+    );
+
+    shineGain.connect(
+      audioContext.destination
+    );
+
+    shine.start(now);
+
+    shine.stop(
+      now + .45
+    );
+
+  }
+
+
+  /* =========================
+     FILTER ROLE
+  ========================= */
+
+  function setRole(role) {
+
+    if (spinning) return;
+
+    selectedRole =
+      role;
+
+
+    document
+      .querySelectorAll(
+        ".filter-button"
+      )
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.role === role
+        );
+
+      });
+
+  }
+
+
+  /* =========================
+     SELECT COUNT
+  ========================= */
+
+  function setCount(count) {
+
+    if (spinning) return;
+
+    selectedCount =
+      count;
+
+
+    document
+      .querySelectorAll(
+        ".count-button"
+      )
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          Number(button.dataset.count) === count
+        );
+
+      });
+
+  }
+
+
+  /* =========================
+     GET AVAILABLE CHARACTERS
+  ========================= */
+
+  function getAvailableCharacters() {
+
+    if (
+      selectedRole === "ALL"
+    ) {
+
+      return [
+        ...characters
+      ];
 
     }
 
 
-    function playTick(intensity = 1) {
+    return characters.filter(
+      character => {
 
-      if (!audioContext) return;
+        return character.role
+          .split("/")
+          .map(
+            role =>
+              role.trim()
+          )
+          .includes(
+            selectedRole
+          );
 
-      const now =
-        audioContext.currentTime;
+      }
+    );
+
+  }
 
 
-      const oscillator =
-        audioContext.createOscillator();
+  /* =========================
+     RANDOM UNIQUE
+  ========================= */
 
-      const gain =
-        audioContext.createGain();
+  function getRandomCharacters(
+    pool,
+    amount
+  ) {
+
+    const available =
+      [...pool];
+
+    const selected = [];
 
 
-      oscillator.type = "triangle";
+    while (
+      selected.length < amount &&
+      available.length > 0
+    ) {
 
+      const index =
+        Math.floor(
+          Math.random() *
+          available.length
+        );
 
-      oscillator.frequency.setValueAtTime(
-        180 + intensity * 80,
-        now
+      selected.push(
+        available[index]
       );
 
-
-      gain.gain.setValueAtTime(
-        0.0001,
-        now
+      available.splice(
+        index,
+        1
       );
-
-
-      gain.gain.exponentialRampToValueAtTime(
-        0.08 * intensity,
-        now + 0.005
-      );
-
-
-      gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        now + 0.055
-      );
-
-
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-
-
-      oscillator.start(now);
-      oscillator.stop(now + 0.06);
 
     }
 
 
-    function playFinalSound() {
+    return selected;
 
-      if (!audioContext) return;
+  }
 
-      const now =
-        audioContext.currentTime;
+
+  /* =========================
+     RENDER
+  ========================= */
+
+  function renderCharacters(
+    list,
+    visible = true
+  ) {
+
+    const results =
+      document.getElementById(
+        "results"
+      );
+
+
+    const grid =
+      document.createElement(
+        "div"
+      );
+
+    grid.className =
+      "result-grid";
+
+
+    list.forEach(
+      (character, index) => {
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "result-card";
+
+
+        card.innerHTML = `
+
+          <div class="result-number">
+            RESULT ${index + 1}
+          </div>
+
+          <div class="character-name">
+            ${character.name}
+          </div>
+
+          <div class="character-role">
+            ${character.role}
+          </div>
+
+        `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+
+    results.innerHTML = "";
+
+    results.appendChild(
+      grid
+    );
+
+
+    if (visible) {
+
+      requestAnimationFrame(
+        () => {
+
+          grid
+            .querySelectorAll(
+              ".result-card"
+            )
+            .forEach(
+              (card, index) => {
+
+                setTimeout(
+                  () => {
+
+                    card.classList.add(
+                      "show"
+                    );
+
+                  },
+                  index * 100
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  }
+
+
+  /* =========================
+     RANDOMIZER
+  ========================= */
+
+  function randomizeCharacters() {
+
+    if (spinning) return;
+
+
+    initAudio();
+
+
+    const pool =
+      getAvailableCharacters();
+
+
+    if (
+      pool.length < selectedCount
+    ) {
+
+      alert(
+        "No hay suficientes personajes disponibles para esta selección."
+      );
+
+      return;
+
+    }
+
+
+    spinning =
+      true;
+
+
+    const button =
+      document.getElementById(
+        "randomButton"
+      );
+
+    const display =
+      document.getElementById(
+        "display"
+      );
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+
+    button.disabled =
+      true;
+
+
+    display.classList.remove(
+      "winner"
+    );
+
+    display.classList.add(
+      "randomizing"
+    );
+
+
+    status.textContent =
+      "SELECTING";
+
+
+    const finalCharacters =
+      getRandomCharacters(
+        pool,
+        selectedCount
+      );
+
+
+    const duration =
+      3000;
+
+    const start =
+      performance.now();
+
+    let lastTick =
+      0;
+
+
+    function animate(now) {
+
+      const elapsed =
+        now - start;
+
+      const progress =
+        Math.min(
+          elapsed / duration,
+          1
+        );
 
 
       /*
-        IMPACTO GRAVE
-      */
+       * Al principio cambia rápido.
+       * Al final reduce la velocidad.
+       */
 
-      const bass =
-        audioContext.createOscillator();
-
-      const bassGain =
-        audioContext.createGain();
-
-
-      bass.type = "sine";
-
-
-      bass.frequency.setValueAtTime(
-        100,
-        now
-      );
+      const speed =
+        35 +
+        Math.pow(
+          progress,
+          3
+        ) * 220;
 
 
-      bass.frequency.exponentialRampToValueAtTime(
-        42,
-        now + 0.45
-      );
+      if (
+        now - lastTick >
+        speed
+      ) {
+
+        lastTick =
+          now;
 
 
-      bassGain.gain.setValueAtTime(
-        0.0001,
-        now
-      );
+        const preview =
+          getRandomCharacters(
+            pool,
+            selectedCount
+          );
 
 
-      bassGain.gain.exponentialRampToValueAtTime(
-        0.4,
-        now + 0.015
-      );
+        renderCharacters(
+          preview,
+          false
+        );
 
 
-      bassGain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        now + 0.5
-      );
+        playTick(
+          .5 +
+          progress * .5
+        );
+
+      }
 
 
-      bass.connect(bassGain);
-      bassGain.connect(audioContext.destination);
+      if (
+        progress < 1
+      ) {
 
+        requestAnimationFrame(
+          animate
+        );
 
-      bass.start(now);
-      bass.stop(now + 0.55);
+      } else {
 
+        finish();
 
-      /*
-        TONO BRILLANTE
-      */
-
-      const shine =
-        audioContext.createOscillator();
-
-      const shineGain =
-        audioContext.createGain();
-
-
-      shine.type = "triangle";
-
-
-      shine.frequency.setValueAtTime(
-        420,
-        now
-      );
-
-
-      shine.frequency.exponentialRampToValueAtTime(
-        900,
-        now + 0.35
-      );
-
-
-      shineGain.gain.setValueAtTime(
-        0.0001,
-        now
-      );
-
-
-      shineGain.gain.exponentialRampToValueAtTime(
-        0.12,
-        now + 0.02
-      );
-
-
-      shineGain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        now + 0.4
-      );
-
-
-      shine.connect(shineGain);
-      shineGain.connect(audioContext.destination);
-
-
-      shine.start(now);
-      shine.stop(now + 0.45);
+      }
 
     }
 
 
-    /*
-      ============================================
-      RANDOMIZER
-      ============================================
-    */
+    function finish() {
 
-    let spinning = false;
-
-
-    function randomizeCharacter() {
-
-      if (spinning) return;
-
-
-      initAudio();
-
-
-      spinning = true;
-
-
-      const button =
-        document.getElementById(
-          "randomButton"
-        );
-
-
-      const display =
-        document.getElementById(
-          "display"
-        );
-
-
-      const name =
-        document.getElementById(
-          "characterName"
-        );
-
-
-      const role =
-        document.getElementById(
-          "characterRole"
-        );
-
-
-      const status =
-        document.getElementById(
-          "status"
-        );
-
-
-      button.disabled = true;
-
-
-      display.classList.remove(
-        "winner"
-      );
-
-
-      display.classList.add(
-        "randomizing"
+      renderCharacters(
+        finalCharacters,
+        true
       );
 
 
       status.textContent =
-        "SELECTING";
+        "SELECTED";
 
 
-      /*
-        RESULTADO FINAL
-      */
+      display.classList.remove(
+        "randomizing"
+      );
 
-      const finalIndex =
-        Math.floor(
-          Math.random() *
-          characters.length
-        );
-
-
-      /*
-        DURACIÓN
-      */
-
-      const duration =
-        3000;
-
-
-      const start =
-        performance.now();
-
-
-      let lastCharacter =
-        -1;
-
-
-      function animate(now) {
-
-        const elapsed =
-          now - start;
-
-
-        const progress =
-          Math.min(
-            elapsed / duration,
-            1
-          );
-
-
-        /*
-          FRENADO SUAVE
-        */
-
-        const eased =
-          1 -
-          Math.pow(
-            1 - progress,
-            4
-          );
-
-
-        let index;
-
-
-        /*
-          Primera parte:
-          personajes aleatorios.
-
-          Parte final:
-          nos acercamos al ganador.
-        */
-
-        if (progress < 0.88) {
-
-          index =
-            Math.floor(
-              Math.random() *
-              characters.length
-            );
-
-        } else {
-
-          index =
-            finalIndex;
-
-        }
-
-
-        if (index !== lastCharacter) {
-
-          const character =
-            characters[index];
-
-
-          name.textContent =
-            character.name;
-
-
-          role.textContent =
-            character.role;
-
-
-          lastCharacter =
-            index;
-
-
-          const intensity =
-            0.4 +
-            progress * 0.6;
-
-
-          playTick(
-            intensity
-          );
-
-        }
-
-
-        if (progress < 1) {
-
-          requestAnimationFrame(
-            animate
-          );
-
-        } else {
-
-          finishSelection();
-
-        }
-
-      }
-
-
-      requestAnimationFrame(
-        animate
+      display.classList.add(
+        "winner"
       );
 
 
-      function finishSelection() {
-
-        const character =
-          characters[finalIndex];
+      playFinalSound();
 
 
-        name.textContent =
-          character.name;
+      button.disabled =
+        false;
 
-
-        role.textContent =
-          character.role;
-
-
-        status.textContent =
-          "SELECTED";
-
-
-        display.classList.remove(
-          "randomizing"
-        );
-
-
-        display.classList.add(
-          "winner"
-        );
-
-
-        playFinalSound();
-
-
-        button.disabled =
-          false;
-
-
-        spinning =
-          false;
-
-      }
+      spinning =
+        false;
 
     }
 
-  </script>
+
+    requestAnimationFrame(
+      animate
+    );
+
+  }
+
+</script>
 
 </body>
 </html>
