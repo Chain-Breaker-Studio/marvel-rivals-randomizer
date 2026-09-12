@@ -2201,12 +2201,35 @@
 
 
 
-      /* Mobile broadcast */
+            /* =====================================================
+         MOBILE BROADCAST
+         
+         IMPORTANTE:
+         En móvil Broadcast puede ocupar más altura que la
+         pantalla cuando hay 2 o 3 tarjetas.
+         
+         Permitimos scroll vertical solamente aquí.
+         No modifica el funcionamiento del Randomizer.
+      ====================================================== */
+
+      body.broadcast-mode {
+        height: auto;
+        min-height: 100vh;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
+      }
 
       body.broadcast-mode .app {
         width: 94%;
+
+        height: auto;
+        min-height: 100vh;
+
         padding:
-          8px 0 9px;
+          8px 0 24px;
       }
 
       body.broadcast-mode .hero-header {
@@ -2230,39 +2253,117 @@
       }
 
       body.broadcast-mode .display {
+        /*
+          IMPORTANTE:
+          Ya no obligamos al display a ocupar solamente
+          el espacio restante de la pantalla.
+
+          Si hay 1, 2 o 3 tarjetas, puede crecer.
+        */
+
+        flex:
+          0 0 auto;
+
+        height: auto;
+
+        min-height:
+          360px;
+
         margin:
-          6px auto 9px;
+          6px auto 14px;
+
+        overflow:
+          visible;
       }
 
       body.broadcast-mode .results {
         padding:
-          18px 10px;
+          18px 10px 24px;
+      }
+
+      body.broadcast-mode .result-grid {
+        width: 100%;
       }
 
       body.broadcast-mode .result-card {
         min-height:
-          clamp(180px, 30vh, 250px);
+          220px;
+
+        padding:
+          24px 16px;
       }
 
       body.broadcast-mode .character-name {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        font-size:
+          clamp(29px, 10vw, 48px);
+
+        overflow-wrap:
+          break-word;
+
+        word-break:
+          normal;
+      }
+
+      /*
+        Broadcast + 2 héroes
+      */
+
+      body.broadcast-mode .result-grid:has(.result-card:nth-child(2)) .character-name {
         font-size:
           clamp(29px, 10vw, 48px);
       }
 
-      body.broadcast-mode .result-grid:has(.result-card:nth-child(2)) .character-name,
+      /*
+        Broadcast + 3 héroes
+      */
+
       body.broadcast-mode .result-grid:has(.result-card:nth-child(3)) .character-name {
         font-size:
           clamp(29px, 10vw, 48px);
       }
 
+      body.broadcast-mode .character-role {
+        margin-top:
+          16px;
+
+        max-width:
+          100%;
+
+        font-size:
+          8px;
+      }
+
+      /*
+        El botón queda dentro del flujo normal de la página.
+        Por tanto, si el contenido ocupa más que la pantalla,
+        simplemente hacemos scroll hacia abajo.
+      */
+
       body.broadcast-mode .random-button {
+        flex-shrink:
+          0;
+
+        width:
+          min(460px, 100%);
+
+        margin:
+          0 auto;
+
         padding:
           13px 20px;
 
-        font-size: 11px;
+        font-size:
+          11px;
       }
 
-    }
+      body.broadcast-mode .display-corner {
+        opacity:
+          .95;
+      }
 
 
 
